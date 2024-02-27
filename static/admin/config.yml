@@ -1,29 +1,42 @@
+# local_backend: true
+
 backend:
   name: git-gateway
+  squash_merges: true
+
+publish_mode: editorial_workflow
 
 media_folder: static/img
 public_folder: /img
 
+search: false
+
 collections:
-  - name: 'quiz'
-    label: 'Quiz'
-    folder: 'content/quiz'
+  - name: 'content'
+    label: 'content'
+    folder: 'content/content'
     create: true
+    delete: false
     slug: '{{slug}}'
     widget: object
-    #media_folder: ''
-    #public_folder: ''
-    #path: '{{title}}/index'
     editor:
       preview: false
     fields:
-      - { label: 'Title', name: 'title', widget: 'string' }
-      - label: 'Subcategory'
-        name: 'subcategory'
-        widget: 'list'
+      - label: 'Quizzes'
+        label_singular: 'Quiz'
+        name: 'quiz'
+        widget: list
         fields:
           - { label: 'Title', name: 'title', widget: 'string' }
-          - label: 'Answers'
-            name: 'answers'
+          - label: 'Subcategories'
+            label_singular: 'Subcategory'
+            name: 'subcategory'
             widget: 'list'
-            fields: { label: 'Answer', name: 'answer', widget: 'string' }
+            fields:
+              - { label: 'Title', name: 'title', widget: 'string' }
+              - label: 'Answers'
+                label_singular: 'answer'
+                name: 'answer'
+                widget: 'list'
+                fields: 
+                  - { label: 'Value', name: 'value', widget: 'string' }
