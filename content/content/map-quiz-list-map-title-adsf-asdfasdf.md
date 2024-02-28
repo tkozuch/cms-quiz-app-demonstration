@@ -25,4 +25,9 @@ quiz:
           - value: Manchester
           - value: London
           - value: Birmingham
+  - title: Totally new quiz
+    subcategory:
+      - title: Sub1
+        answer:
+          - value: Xxx
 ---
