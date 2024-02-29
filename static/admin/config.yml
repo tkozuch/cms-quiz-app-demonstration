@@ -1,4 +1,4 @@
-# local_backend: true
+local_backend: true
 
 backend:
   name: git-gateway
@@ -12,31 +12,30 @@ public_folder: /img
 search: false
 
 collections:
-  - name: 'content'
-    label: 'content'
-    folder: 'content/content'
+  - name: 'quiz'
+    label: 'quiz'
+    folder: 'content/quiz'
     create: true
-    delete: false
     slug: '{{slug}}'
     widget: object
     editor:
       preview: false
     fields:
-      - label: 'Quizzes'
-        label_singular: 'Quiz'
-        name: 'quiz'
-        widget: list
-        fields:
-          - { label: 'Title', name: 'title', widget: 'string' }
-          - label: 'Subcategories'
-            label_singular: 'Subcategory'
-            name: 'subcategory'
-            widget: 'list'
-            fields:
-              - { label: 'Title', name: 'title', widget: 'string' }
-              - label: 'Answers'
-                label_singular: 'answer'
-                name: 'answer'
-                widget: 'list'
-                fields: 
-                  - { label: 'Value', name: 'value', widget: 'string' }
+        - { label: 'Title', name: 'title', widget: 'string' }
+        - label: 'Subcategories'
+          label_singular: 'Subcategory'
+          name: 'subcategories'
+          widget: 'list'
+          min: 1
+          max: 99
+          required: true
+          fields:
+            - { label: 'Title', name: 'title', widget: 'string' }
+            - label: 'Answers'
+              label_singular: 'answer'
+              name: 'answers'
+              min: 1
+              max: 99
+              widget: 'list'
+              fields: 
+                - { label: 'Value', name: 'value', widget: 'string' }
