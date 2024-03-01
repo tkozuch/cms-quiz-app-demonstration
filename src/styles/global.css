@@ -7,6 +7,7 @@ body {
   width: 100vw;
   display: flex;
   justify-content: center;
+  @apply bg-gradient-to-tr from-yellow-300 to-sky-300;
 }
 
 #___gatsby {
@@ -15,5 +16,4 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  @apply bg-gradient-to-tr from-yellow-300 to-sky-300;
 }

@@ -20,41 +20,43 @@ const IndexPage = ({
   const { allMarkdownRemark } = data; // data.markdownRemark holds your post data
 
   const dummyData = [];
-  // dummyData.push(
-  //   [
-  //     "dummy",
-  //     "dummy",
-  //     "dummy",
-  //     "dummy",
-  //     "dummy",
-  //     "dummy",
-  //     "dummy",
-  //     "dummy",
-  //     "Taylor Swift Songs",
-  //     "dummy",
-  //     "dummy",
-  //     "dummy",
-  //     "dummy",
-  //     "dummy",
-  //     "dummy",
-  //     "dummy",
-  //   ].map((x) => ({ frontmatter: { title: x } }))
-  // );
+  dummyData.push(
+    [
+      "dummy",
+      "dummy",
+      "dummy",
+      "dummy",
+      "dummy",
+      "dummy",
+      "dummy",
+      "dummy",
+      "Taylor Swift Songs",
+      "dummy",
+      "dummy",
+      "dummy",
+      "dummy",
+      "dummy",
+      "dummy",
+      "dummy",
+    ].map((x) => ({ frontmatter: { title: x } }))
+  );
 
   const testData = allMarkdownRemark.nodes.concat(...dummyData);
 
   return (
-    <div className="w-screen h-screen flex flex-col justify-center items-center">
-      <h1 className="text-7xl mb-24 ">Today's quizzes:</h1>
+    <div className="w-screen h-screen flex flex-col justify-center items-center py-12">
+      <h1 className="text-6xl sm:text-7xl mb-24 px-8 text-center ">
+        Today's quizzes:
+      </h1>
       <ul
-        className="flex flex-wrap w-full px-32 xl:px-64 gap-x-[--gapx] gap-y-2 justify-between"
+        className="flex flex-wrap w-full px-8 md:px-32 xl:px-64 gap-x-[--gapx] gap-y-2 justify-between max-h-[70vh] overflow-y-scroll"
         style={{ "--gapx": "4rem" }}
       >
         {testData.map((quiz) => (
           <li
             key={quiz.gatsbyPath}
-            className="flex flex-col flex-wrap"
-            style={{ width: "calc(25% - var(--gapx))" }}
+            className="flex flex-col flex-wrap w-full md:w-[--md-width] text-center "
+            style={{ "--md-width": "calc(25% - var(--gapx))" }}
           >
             <Link to={quiz.gatsbyPath} className="text-xl">
               {quiz.frontmatter.title}
