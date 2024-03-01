@@ -1,22 +1,68 @@
 import * as React from "react";
 import { Link, graphql } from "gatsby";
 
+// /**
+//  * @param {array} array
+//  */
+// const divideIntoEqualColumns = (array) => {
+//   if (array.length <= 1) {
+//     return [array, []];
+//   }
+
+//   const divisionIndex = Math.ceil(array.length / 2); // 4/2 = 2, ceil(2) = 2; 3/2 = 1.5, ceil(1.5) = 2
+
+//   return [array.slice(0, divisionIndex + 1), array.slice(divisionIndex + 1)];
+// };
+
 const IndexPage = ({
   data, // this prop will be injected by the GraphQL query below.
 }) => {
   const { allMarkdownRemark } = data; // data.markdownRemark holds your post data
 
+  const dummyData = [];
+  // dummyData.push(
+  //   [
+  //     "dummy",
+  //     "dummy",
+  //     "dummy",
+  //     "dummy",
+  //     "dummy",
+  //     "dummy",
+  //     "dummy",
+  //     "dummy",
+  //     "Taylor Swift Songs",
+  //     "dummy",
+  //     "dummy",
+  //     "dummy",
+  //     "dummy",
+  //     "dummy",
+  //     "dummy",
+  //     "dummy",
+  //   ].map((x) => ({ frontmatter: { title: x } }))
+  // );
+
+  const testData = allMarkdownRemark.nodes.concat(...dummyData);
+
   return (
-    <>
-      <h1>Today's quizzes:</h1>
-      <ul>
-        {allMarkdownRemark.nodes.map((quiz) => (
-          <li key={quiz.gatsbyPath}>
-            <Link to={quiz.gatsbyPath}>{quiz.frontmatter.title}</Link>
+    <div className="w-screen h-screen flex flex-col justify-center items-center">
+      <h1 className="text-7xl mb-24 ">Today's quizzes:</h1>
+      <ul
+        className="flex flex-wrap w-full px-32 xl:px-64 gap-x-[--gapx] gap-y-2 justify-between"
+        style={{ "--gapx": "4rem" }}
+      >
+        {testData.map((quiz) => (
+          <li
+            key={quiz.gatsbyPath}
+            className="flex flex-col flex-wrap"
+            style={{ width: "calc(25% - var(--gapx))" }}
+          >
+            <Link to={quiz.gatsbyPath} className="text-xl">
+              {quiz.frontmatter.title}
+            </Link>
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 };
 
