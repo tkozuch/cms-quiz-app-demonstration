@@ -49,7 +49,7 @@ const IndexPage = ({
         Today's quizzes:
       </h1>
       <ul
-        className="flex flex-wrap w-full px-8 md:px-32 xl:px-64 gap-x-[--gapx] gap-y-2 justify-between max-h-[70vh] overflow-y-scroll"
+        className="flex flex-wrap w-full px-8 md:px-32 xl:px-64 gap-x-[--gapx] gap-y-2 justify-between max-h-[70vh] overflow-y-auto"
         style={{ "--gapx": "4rem" }}
       >
         {testData.map((quiz) => (
