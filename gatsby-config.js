@@ -1,6 +1,6 @@
-require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV}`,
-})
+// require("dotenv").config({
+//   path: `.env.${process.env.NODE_ENV}`,
+// })
 
 /**
  * @type {import('gatsby').GatsbyConfig}
@@ -17,7 +17,7 @@ module.exports = {
       "path": "./src/images/"
     },
     __key: "images"
-  }, 
+  },
   {
     resolve: 'gatsby-source-filesystem',
     options: {
@@ -31,6 +31,12 @@ module.exports = {
     options: {
       name: `quiz`,
       path: `${__dirname}/content/quiz`,
+    },
+  },
+  {
+    resolve: `gatsby-plugin-page-creator`,
+    options: {
+      path: `${__dirname}/src/pages`,
     },
   },
   `gatsby-transformer-remark`,

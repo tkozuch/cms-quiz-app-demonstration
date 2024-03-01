@@ -1,54 +1,38 @@
-import * as React from "react"
-import { graphql } from "gatsby"
+import * as React from "react";
+import { Link, graphql } from "gatsby";
 
 const IndexPage = ({
   data, // this prop will be injected by the GraphQL query below.
 }) => {
-  const { allMarkdownRemark } = data // data.markdownRemark holds your post data
-
-  const quizes = allMarkdownRemark.nodes.map(({frontmatter}) => frontmatter);
+  const { allMarkdownRemark } = data; // data.markdownRemark holds your post data
 
   return (
     <>
       <h1>Today's quizzes:</h1>
-      {quizes.map(({title, subcategories}, index) => (
-        <>
-          <h2 key={index}>{title}</h2>
-          {subcategories && subcategories.map(({title, answers}) => (
-            <>
-              <p>{title}</p>
-              {answers && <ul>
-                {answers.map(({value}) => (
-                  <li>{value}</li>
-                ))}
-              </ul>}
-            </>              
-          ))}
-        </>
-      ))}
+      <ul>
+        {allMarkdownRemark.nodes.map((quiz) => (
+          <li key={quiz.gatsbyPath}>
+            <Link to={quiz.gatsbyPath}>{quiz.frontmatter.title}</Link>
+          </li>
+        ))}
+      </ul>
     </>
-  )
-}
+  );
+};
 
 export const pageQuery = graphql`
   query {
     allMarkdownRemark {
       nodes {
-        id
         frontmatter {
           title
-          subcategories {
-            title
-            answers {
-              value
-            }
-          }
         }
+        gatsbyPath(filePath: "/quiz/{MarkdownRemark.parent__(File)__name}")
       }
     }
   }
-`
+`;
 
-export default IndexPage
+export default IndexPage;
 
-export const Head = () => <title>Home Page</title>
+export const Head = () => <title>Home Page</title>;

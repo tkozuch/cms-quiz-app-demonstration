@@ -1,6 +1,7 @@
 import * as React from "react"
 import { graphql } from "gatsby"
 
+
 const QuizPage = ({
   data, // this prop will be injected by the GraphQL query below.
 }) => {
@@ -41,7 +42,7 @@ export const pageQuery = graphql`
                         value
                     }
                 }
-            }
+            }            
         }
     }
 `
