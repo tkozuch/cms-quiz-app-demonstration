@@ -11,4 +11,12 @@ subcategories:
       - value: Love you
       - value: Taylor Swift
       - value: Song 7
+  - title: Third subcategory
+    answers:
+      - value: Answer x
+      - value: Answer y
+      - value: Answer z
+      - value: Answer p
+      - value: Answer q
+      - value: Answer qq
 ---

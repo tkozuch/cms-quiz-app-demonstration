@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Link, graphql } from "gatsby";
 
+import Layout from "../components/layout";
 // /**
 //  * @param {array} array
 //  */
@@ -44,12 +45,12 @@ const IndexPage = ({
   const testData = allMarkdownRemark.nodes.concat(...dummyData);
 
   return (
-    <div className="w-screen h-screen flex flex-col justify-center items-center py-12">
-      <h1 className="text-6xl sm:text-7xl mb-24 px-8 text-center ">
+    <Layout>
+      <h1 className="text-6xl sm:text-7xl mb-24 text-center ">
         Today's quizzes:
       </h1>
       <ul
-        className="flex flex-wrap w-full px-8 md:px-32 xl:px-64 gap-x-[--gapx] gap-y-2 justify-between max-h-[70vh] overflow-y-auto"
+        className="flex flex-wrap w-full gap-x-[--gapx] gap-y-2 justify-between max-h-[70vh] overflow-y-auto"
         style={{ "--gapx": "4rem" }}
       >
         {testData.map((quiz) => (
@@ -64,7 +65,7 @@ const IndexPage = ({
           </li>
         ))}
       </ul>
-    </div>
+    </Layout>
   );
 };
 
