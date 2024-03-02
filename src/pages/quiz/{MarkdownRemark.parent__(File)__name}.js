@@ -51,7 +51,7 @@ const QuizPage = ({
 }) => {
   const { markdownRemark } = data; // data.markdownRemark holds your post data
   const quiz_data = markdownRemark.frontmatter;
-  const quizTime = 180;
+  const quizTime = 5;
 
   const [timeRemaining, setTimeRemaining] = useState(quizTime);
   const [answeredQuestions, setAnsweredQuestions] = useState(0);
@@ -104,7 +104,7 @@ const QuizPage = ({
                 {quiz_data.title}
               </div>
               {/* space to show action item */}
-              <div className="w-full max-w-[600px] mt-auto h-1/3 text-xl max-h-[50px] min-h-[20px]">
+              <div className="flex justify-center w-full max-w-[600px] mt-auto h-1/3 text-xl max-h-[50px] min-h-[20px] self-center">
                 {quizState === QUIZ_NOT_STARTED ? (
                   <button
                     className="bg-stone-300 w-full h-full flex justify-center items-center"
@@ -128,12 +128,12 @@ const QuizPage = ({
               </div>
             </>
           ) : (
-            <div className="relative flex justify-center items-center w-full h-full text-4xl">
+            <div className="relative flex self-center justify-center items-center w-fit h-full text-4xl">
               Time's Up!
               {/* button-wrapper */}
               <div className="flex flex-col">
                 <button
-                  className="absolute w-9 h-9 bg-stone-300 right-4 bottom-4 p-1 after:content-['try_again'] after:text-xs after:absolute after:-bottom-4 after:-left-4 after:text-center after:w-16 after:capitalize"
+                  className="absolute w-9 h-9 bg-stone-300 -right-12 bottom-8 p-1 after:content-['try_again'] after:text-xs after:absolute after:-bottom-4 after:-left-[0.875rem] after:text-center after:w-16 after:capitalize"
                   onClick={() => {
                     setQuizState(QUIZ_RUNNING);
                     setTimeRemaining(quizTime);
@@ -147,27 +147,29 @@ const QuizPage = ({
         </div>
         {/* subcategories */}
         {
-          <div className="flex overflow-x-scroll w-screen relative left-1/2 right-1/2 ml-[-50vw] mr-[-50vw]  gap-4 snap-x snap-mandatory h-full sm:h-fit mt-4">
+          <div className="flex self-auto lg:self-center overflow-x-auto w-screen relative left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] lg:left-0 lg:right-0 lg:ml-0 lg:mr-0 gap-4 snap-x snap-mandatory h-full mt-4">
             {(quizState === QUIZ_RUNNING || quizState === QUIZ_TIMESUP) &&
-              quiz_data.subcategories.map(({ title, answers }, i) => (
-                // {/* card */}
-                <div
-                  className="min-w-[70vw] border border-stone-50 snap-center first:ml-[15vw] last:mr-[15vw] p-2 "
-                  key={i}
-                >
-                  <h3 className="text-xl text-center">{title}</h3>
-                  <ul>
-                    {answers.map((answer, i) => (
-                      <li
-                        key={i}
-                        className="border borderstone-50 mt-2 text-transparent select-none"
-                      >
-                        {answer.value}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+              quiz_data.subcategories
+                .concat(quiz_data.subcategories)
+                .map(({ title, answers }, i) => (
+                  // {/* card */}
+                  <div
+                    className="w-[70vw] lg:w-[25vw] shrink-0 border border-stone-50 snap-center first:ml-[15vw] lg:first:ml-[5vw] last:mr-[15vw] lg:last:mr-[5vw] p-2 mb-4"
+                    key={i}
+                  >
+                    <h3 className="text-xl text-center">{title}</h3>
+                    <ul>
+                      {answers.map((answer, i) => (
+                        <li
+                          key={i}
+                          className="border borderstone-50 mt-2 text-transparent select-none"
+                        >
+                          {answer.value}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
           </div>
         }
       </div>
