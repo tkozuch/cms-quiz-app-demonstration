@@ -1,13 +1,18 @@
 ---
 title: biggest cities
 subcategories:
-  - title: Subcategory 1
+  - title: North America
     answers:
-      - value: answer 1
-      - value: answer 2
-      - value: answer 3
+      - value: Toronto
+      - value: New Yourk
+      - value: Los Angeles
+      - value: Vancouver
+      - value: California
   - title: Europe
     answers:
       - value: Krakow
       - value: London
+      - value: Berlin
+      - value: Warsaw
+      - value: Madrid
 ---
