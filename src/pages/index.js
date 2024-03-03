@@ -20,29 +20,30 @@ const IndexPage = ({
 }) => {
   const { allMarkdownRemark } = data; // data.markdownRemark holds your post data
 
-  const dummyData = [];
-  dummyData.push(
-    [
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "Taylor Swift Songs",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-    ].map((x) => ({ frontmatter: { title: x } }))
-  );
-
-  const testData = allMarkdownRemark.nodes.concat(...dummyData);
+  // data for UI testing purposes
+  // const dummyData = [];
+  // dummyData.push(
+  //   [
+  //     "dummy",
+  //     "dummy",
+  //     "dummy",
+  //     "dummy",
+  //     "dummy",
+  //     "dummy",
+  //     "dummy",
+  //     "dummy",
+  //     "Taylor Swift Songs",
+  //     "dummy",
+  //     "dummy",
+  //     "dummy",
+  //     "dummy",
+  //     "dummy",
+  //     "dummy",
+  //     "dummy",
+  //   ].map((x) => ({ frontmatter: { title: x } }))
+  // );
+  // const testData = allMarkdownRemark.nodes.concat(...dummyData);
+  // ----------------------------
 
   return (
     <Layout>
@@ -53,7 +54,7 @@ const IndexPage = ({
         className="flex flex-wrap w-full gap-x-[--gapx] gap-y-2 justify-between max-h-[70vh] overflow-y-auto"
         style={{ "--gapx": "4rem" }}
       >
-        {testData.map((quiz) => (
+        {allMarkdownRemark.nodes.map((quiz) => (
           <li
             key={quiz.gatsbyPath}
             className="flex flex-col flex-wrap w-full md:w-[--md-width] text-center "

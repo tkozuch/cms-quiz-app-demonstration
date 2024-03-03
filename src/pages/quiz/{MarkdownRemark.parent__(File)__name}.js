@@ -270,14 +270,26 @@ const QuizPage = ({
         </div>
         {/* subcategories */}
         {
-          <div className="flex self-auto lg:self-center overflow-x-auto w-screen relative left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] lg:left-0 lg:right-0 lg:ml-0 lg:mr-0 gap-4 snap-x snap-mandatory h-full mt-4">
+          <div
+            className={
+              "flex self-auto lg:self-center overflow-x-auto w-screen relative left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] lg:left-0 lg:right-0 lg:ml-0 lg:mr-0 gap-4 snap-x snap-mandatory h-full mt-4" +
+              (quiz_data.subcategories.length < 4 ? " lg:justify-center " : "")
+            }
+          >
             {(quizState === QUIZ_RUNNING ||
               quizState === QUIZ_TIMESUP ||
               quizState === QUIZ_FINISHED) &&
               quiz_data.subcategories.map(({ title, answers }, i) => (
                 // {/* card */}
                 <div
-                  className="w-[70vw] lg:w-[25vw] shrink-0 border-2 bg-purple-200/40 snap-center first:ml-[15vw] lg:first:ml-[5vw] last:mr-[15vw] lg:last:mr-[5vw] p-2 mb-4"
+                  className={
+                    "w-[70vw] lg:w-[25vw] shrink-0 border-2 bg-purple-200/40 snap-center first:ml-[15vw] last:mr-[15vw] p-2 mb-4" +
+                    (quiz_data.subcategories.length >= 4
+                      ? // dont apply margins if even number of cards, and they are scrollable (more or equal 4)
+                        // this makes them center nicely
+                        " lg:first:ml-0 lg:last:mr-0"
+                      : " lg:first:ml-[5vw] lg:last:mr-[5vw] ")
+                  }
                   key={i}
                 >
                   <h3 className="text-xl text-center px-4 py-2">{title}</h3>

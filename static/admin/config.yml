@@ -12,30 +12,30 @@ public_folder: /img
 search: false
 
 collections:
-  - name: 'quiz'
-    label: 'quiz'
-    folder: 'content/quiz'
+  - name: "quiz"
+    label: "quiz"
+    folder: "content/quiz"
     create: true
-    slug: '{{slug}}'
+    slug: "{{slug}}"
     widget: object
     editor:
       preview: false
     fields:
-        - { label: 'Title', name: 'title', widget: 'string' }
-        - label: 'Subcategories'
-          label_singular: 'Subcategory'
-          name: 'subcategories'
-          widget: 'list'
-          min: 1
-          max: 99
-          required: true
-          fields:
-            - { label: 'Title', name: 'title', widget: 'string' }
-            - label: 'Answers'
-              label_singular: 'answer'
-              name: 'answers'
-              min: 1
-              max: 99
-              widget: 'list'
-              fields: 
-                - { label: 'Value', name: 'value', widget: 'string' }
+      - { label: "Title", name: "title", widget: "string" }
+      - label: "Subcategories"
+        label_singular: "Subcategory"
+        name: "subcategories"
+        widget: "list"
+        min: 1
+        max: 99
+        required: true
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - label: "Answers"
+            label_singular: "answer"
+            name: "answers"
+            min: 1
+            max: 99
+            widget: "list"
+            fields:
+              - { label: "Value", name: "value", widget: "string" }
