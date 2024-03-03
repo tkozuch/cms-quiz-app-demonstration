@@ -1,10 +1,21 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
-import { graphql } from "gatsby";
+import { useState, useEffect, useRef } from "react";
+import { Link, graphql } from "gatsby";
 
-import { PlayIcon, PauseIcon, ArrowPathIcon } from "@heroicons/react/24/solid";
+import {
+  PlayIcon,
+  PauseIcon,
+  ArrowPathIcon,
+  HomeIcon,
+} from "@heroicons/react/24/solid";
 
 import Layout from "../../components/layout";
+
+const QUIZ_NOT_STARTED = "QUIZ_NOT_STARTED";
+const QUIZ_RUNNING = "QUIZ_STARTED";
+const QUIZ_PAUSED = "QUIZ_PAUSED";
+const QUIZ_TIMESUP = "QUIZ_TIMESUP";
+const QUIZ_FINISHED = "QUIZ_FINISHED";
 
 /**
  *
@@ -28,12 +39,6 @@ const formatTime = (seconds) => {
   return `${minute}:${s}`;
 };
 
-const QUIZ_NOT_STARTED = "QUIZ_NOT_STARTED";
-const QUIZ_RUNNING = "QUIZ_STARTED";
-const QUIZ_PAUSED = "QUIZ_PAUSED";
-const QUIZ_TIMESUP = "QUIZ_TIMESUP";
-const QUIZ_FINISHED = "QUIZ_FINISHED";
-
 /**
  *
  * @param {boolean} quizStarted
@@ -47,10 +52,10 @@ const getTopPanelAnswersInfo = (quizState, correctAnswers, allAnswers) => {
 };
 
 /**
- * Preformat answer for easier comparison.
+ * Format answer for consistency within the app.
  *
  *  */
-const preformatAnswer = (answer) => {
+const formatAnswer = (answer) => {
   return answer.toLowerCase();
 };
 
@@ -71,31 +76,60 @@ const preformatAnswer = (answer) => {
 const getInitialAnswersState = (subcategories) =>
   subcategories.reduce((p, c) => {
     let { answers } = c;
-    answers = answers.map((a) => preformatAnswer(a.value));
+    answers = answers.map((a) => formatAnswer(a.value));
     answers.forEach((a) => (p[a] = false));
     return p;
   }, {});
 
+/**
+ * Get initial state for answers in the DOM.
+ *
+ * ex. return:
+ *
+ *  {
+ *      answer_1: reactRef,
+ *      answer_2: reactRef,
+ *      answer_3: reactRef,
+ *  }
+ *
+ *  @param {list[object]} subcategories - data from cms
+ *  @returns {object}
+ */
+const getInitialAnswersRefrences = (subcategories) => {
+  return subcategories.reduce((p, c) => {
+    let { answers } = c;
+    answers = answers.map((a) => formatAnswer(a.value));
+    answers.forEach((a) => (p[a] = useRef(null)));
+    return p;
+  }, {});
+};
+
 const checkAllAnswersCorrect = (answersState) => {
   let allCorrect = true;
-  let ans;
-  for (ans in answersState) {
+  for (let ans in answersState) {
     allCorrect = allCorrect && answersState[ans];
   }
   return allCorrect;
 };
 
+const getCorrectAnswersCount = (answersState) => {
+  let count = 0;
+  for (let ans in answersState) {
+    if (answersState[ans]) {
+      count += 1;
+    }
+  }
+  return count;
+};
+
 const getAnswerStyling = (answer, answersState, quizState) => {
-  console.log("ans: ", answer);
-  let isCorrect = answersState[preformatAnswer(answer)] === true;
+  let isCorrect = answersState[formatAnswer(answer)] === true;
 
   let correctStyling = " text-white bg-green-500 ";
   let unanswared =
     quizState === QUIZ_FINISHED || quizState === QUIZ_TIMESUP
-      ? " text-red-500 "
-      : " text-transparent ";
-
-  console.log("styling correct?", isCorrect);
+      ? " text-red-500 border-red-500 bg-white/50"
+      : " text-transparent bg-white/50";
 
   return isCorrect ? correctStyling : unanswared;
 };
@@ -106,25 +140,26 @@ const QuizPage = ({
   const { markdownRemark } = data; // data.markdownRemark holds your post data
   const quiz_data = markdownRemark.frontmatter;
   const quizTime = 30;
+  const answersReferences = getInitialAnswersRefrences(quiz_data.subcategories);
 
   const [timeRemaining, setTimeRemaining] = useState(quizTime);
   const [quizState, setQuizState] = useState(QUIZ_NOT_STARTED);
   const [answersState, setAnswersState] = useState(
     getInitialAnswersState(quiz_data.subcategories)
   );
-  console.log(answersState);
 
   const allAnswersCount = getNumberOfQuestions(quiz_data.subcategories);
-  const correctAnswersCount = 0; // getCorrectAnswersCount(answerState);
+  const correctAnswersCount = getCorrectAnswersCount(answersState);
 
   const checkAnswer = (answer) => {
-    console.log(" checking ", preformatAnswer(answer), answersState);
     // this means it is correct
-    if (preformatAnswer(answer) in answersState) {
-      console.log("setting as true");
+    if (formatAnswer(answer) in answersState) {
       const stateCopy = { ...answersState };
-      stateCopy[answer] = true;
+      stateCopy[formatAnswer(answer)] = true;
       setAnswersState(stateCopy);
+      answersReferences[formatAnswer(answer)].current?.scrollIntoView({
+        behavior: "smooth",
+      });
     }
   };
 
@@ -150,10 +185,10 @@ const QuizPage = ({
     <Layout>
       <div className="h-full w-full flex flex-col font-bold capitalize bg-gre">
         {/* top-panel */}
-        <div className="flex flex-col h-1/4 min-h-[200px]">
+        <div className="flex flex-col h-1/4 min-h-[200px] items-center">
           {quizState !== QUIZ_TIMESUP ? (
             <>
-              <div className="flex justify-between text-xl">
+              <div className="flex justify-between text-xl w-full max-w-[600px]">
                 <span>
                   {getTopPanelAnswersInfo(
                     quizState.started,
@@ -161,14 +196,18 @@ const QuizPage = ({
                     allAnswersCount
                   )}
                 </span>
-                {quizState !== QUIZ_PAUSED && (
-                  <button
-                    className="bg-yellow-200 ml-auto  w-6 px-1 box-content"
-                    onClick={() => setQuizState(QUIZ_PAUSED)}
-                  >
-                    <PauseIcon />
-                  </button>
-                )}
+                <Link to="/" className="ml-4 mr-auto">
+                  <HomeIcon className="w-6" />
+                </Link>
+                {quizState !== QUIZ_PAUSED &&
+                  quizState !== QUIZ_NOT_STARTED && (
+                    <button
+                      className="bg-yellow-200 ml-auto w-6 px-1 box-content"
+                      onClick={() => setQuizState(QUIZ_PAUSED)}
+                    >
+                      <PauseIcon />
+                    </button>
+                  )}
                 <span className="ml-4">{formatTime(timeRemaining)}</span>
               </div>
               <div className="text-3xl grow justify-center items-center flex text-center overflow-ellipsis">
@@ -224,37 +263,41 @@ const QuizPage = ({
         {
           <div className="flex self-auto lg:self-center overflow-x-auto w-screen relative left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] lg:left-0 lg:right-0 lg:ml-0 lg:mr-0 gap-4 snap-x snap-mandatory h-full mt-4">
             {(quizState === QUIZ_RUNNING || quizState === QUIZ_TIMESUP) &&
-              quiz_data.subcategories
-                .concat(quiz_data.subcategories)
-                .map(({ title, answers }, i) => (
-                  // {/* card */}
-                  <div
-                    className="w-[70vw] lg:w-[25vw] shrink-0 border border-stone-50 snap-center first:ml-[15vw] lg:first:ml-[5vw] last:mr-[15vw] lg:last:mr-[5vw] p-2 mb-4"
-                    key={i}
-                  >
-                    <h3 className="text-xl text-center">{title}</h3>
-                    <ul>
-                      {answers.map((answer, i) => (
-                        <li
-                          key={i}
-                          className={
-                            "mt-2 select-none border borderstone-50" +
-                            getAnswerStyling(
-                              answer.value,
-                              answersState,
-                              quizState
-                            )
-                          }
-                        >
-                          {answer.value}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
+              quiz_data.subcategories.map(({ title, answers }, i) => (
+                // {/* card */}
+                <div
+                  className="w-[70vw] lg:w-[25vw] shrink-0 border-2 bg-purple-200/40 snap-center first:ml-[15vw] lg:first:ml-[5vw] last:mr-[15vw] lg:last:mr-[5vw] p-2 mb-4"
+                  key={i}
+                >
+                  <h3 className="text-xl text-center px-4 py-2">{title}</h3>
+                  <ul>
+                    {answers.map((answer, i) => (
+                      <li
+                        key={i}
+                        className={
+                          "px-4 py-1 mt-2 select-none border-2 " +
+                          getAnswerStyling(
+                            answer.value,
+                            answersState,
+                            quizState
+                          )
+                        }
+                        ref={answersReferences[formatAnswer(answer.value)]}
+                      >
+                        {answer.value}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
           </div>
         }
       </div>
+      <dialog className="w-[90vw] max-w-md h-auto p-8">
+        <p>Congratulations!</p>
+        <p>You've guessed all the questions correctly!</p>
+        <button>Play again</button>
+      </dialog>
     </Layout>
   );
 };
