@@ -9,12 +9,14 @@ subcategories:
       - value: Song 4
       - value: Song 5
   - title: Fearless
+    answers:
       - value: Song 6
       - value: Song 7
       - value: Song 8
       - value: Song 9
       - value: song 10
   - title: Speak Now
+    answers:
       - value: Song 11
       - value: Song 12
       - value: Song 13

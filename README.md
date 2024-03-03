@@ -1,3 +1,14 @@
+# Content Editable Web Quiz App
+
+This app's purpose is to provide UI for quiz creation for non-technical people (CMS layer).
+
+Administrator users will be able to access the `/admin` endpoint and in a friendly UI be able to
+configure quizzes, hosted on the website.
+
+## How to add quiz
+
+go to the development website:
+
 ## Known issues
 
 ### (minor) Not allowed strings values
