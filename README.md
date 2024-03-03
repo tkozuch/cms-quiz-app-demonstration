@@ -7,7 +7,21 @@ configure quizzes, hosted on the website.
 
 ## How to add quiz
 
-go to the development website:
+go to the development website `/admin` url:
+
+(at the time of writing):
+
+> https://cms-quiz-app.netlify.app/admin/
+
+Click new Quiz:
+
+![alt text](image.png)
+
+Fill out the required fields:
+
+![alt text](image-1.png)
+
+
 
 ## Known issues
 
