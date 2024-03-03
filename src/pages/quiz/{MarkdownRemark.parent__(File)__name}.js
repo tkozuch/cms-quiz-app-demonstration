@@ -147,6 +147,8 @@ const QuizPage = ({
   const [answersState, setAnswersState] = useState(
     getInitialAnswersState(quiz_data.subcategories)
   );
+  const dialogRef = useRef(null);
+  const answerRef = useRef(null);
 
   const allAnswersCount = getNumberOfQuestions(quiz_data.subcategories);
   const correctAnswersCount = getCorrectAnswersCount(answersState);
@@ -162,9 +164,18 @@ const QuizPage = ({
       });
     }
   };
+  const resetQuiz = () => {
+    setQuizState(QUIZ_RUNNING);
+    setTimeRemaining(quizTime);
+    setAnswersState(getInitialAnswersState(quiz_data.subcategories));
+    answerRef.current.value = "";
+  };
 
   useEffect(() => {
-    if (checkAllAnswersCorrect(answersState)) setQuizState(QUIZ_FINISHED);
+    if (checkAllAnswersCorrect(answersState)) {
+      dialogRef?.current.showModal();
+      setQuizState(QUIZ_FINISHED);
+    }
   }, [answersState]);
 
   useEffect(() => {
@@ -231,6 +242,7 @@ const QuizPage = ({
                   </button>
                 ) : (
                   <input
+                    ref={answerRef}
                     placeholder="Answer"
                     className="w-full h-full px-4 font-normal"
                     onChange={(e) => checkAnswer(e.target.value)}
@@ -245,13 +257,7 @@ const QuizPage = ({
               <div className="flex flex-col">
                 <button
                   className="absolute w-9 h-9 bg-stone-300 -right-12 bottom-8 p-1 after:content-['try_again'] after:text-xs after:absolute after:-bottom-4 after:-left-[0.875rem] after:text-center after:w-16 after:capitalize"
-                  onClick={() => {
-                    setQuizState(QUIZ_RUNNING);
-                    setTimeRemaining(quizTime);
-                    setAnswersState(
-                      getInitialAnswersState(quiz_data.subcategories)
-                    );
-                  }}
+                  onClick={resetQuiz}
                 >
                   <ArrowPathIcon />
                 </button>
@@ -262,7 +268,9 @@ const QuizPage = ({
         {/* subcategories */}
         {
           <div className="flex self-auto lg:self-center overflow-x-auto w-screen relative left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] lg:left-0 lg:right-0 lg:ml-0 lg:mr-0 gap-4 snap-x snap-mandatory h-full mt-4">
-            {(quizState === QUIZ_RUNNING || quizState === QUIZ_TIMESUP) &&
+            {(quizState === QUIZ_RUNNING ||
+              quizState === QUIZ_TIMESUP ||
+              quizState === QUIZ_FINISHED) &&
               quiz_data.subcategories.map(({ title, answers }, i) => (
                 // {/* card */}
                 <div
@@ -293,10 +301,23 @@ const QuizPage = ({
           </div>
         }
       </div>
-      <dialog className="w-[90vw] max-w-md h-auto p-8">
-        <p>Congratulations!</p>
-        <p>You've guessed all the questions correctly!</p>
-        <button>Play again</button>
+      <dialog
+        className="open:flex flex-col items-center w-[90vw] max-w-md p-8 h-fit backdrop:bg-black/40"
+        ref={dialogRef}
+      >
+        <p className="text-xl text-green-400 font-bold">Congratulations!</p>
+        <p className="mt-5 text-center">
+          You've guessed all the questions correctly!
+        </p>
+        <button
+          className="mt-8 bg-teal-200/50 border-2 border-black/80 p-2"
+          onClick={() => {
+            dialogRef.current.close();
+            resetQuiz();
+          }}
+        >
+          Play again
+        </button>
       </dialog>
     </Layout>
   );
