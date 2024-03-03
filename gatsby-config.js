@@ -1,3 +1,4 @@
+// WARNING: This is known to cause a GraphQL admin error!
 // require("dotenv").config({
 //   path: `.env.${process.env.NODE_ENV}`,
 // })
@@ -8,37 +9,44 @@
 module.exports = {
   siteMetadata: {
     title: `Quiz`,
-    siteUrl: `https://www.yourdomain.tld`
+    siteUrl: `https://www.yourdomain.tld`,
   },
-  plugins: ["gatsby-plugin-netlify-cms", "gatsby-plugin-postcss", "gatsby-plugin-image", "gatsby-plugin-mdx", "gatsby-plugin-sharp", "gatsby-transformer-sharp", {
-    resolve: 'gatsby-source-filesystem',
-    options: {
-      "name": "images",
-      "path": "./src/images/"
+  plugins: [
+    "gatsby-plugin-netlify-cms",
+    "gatsby-plugin-postcss",
+    "gatsby-plugin-image",
+    "gatsby-plugin-mdx",
+    "gatsby-plugin-sharp",
+    "gatsby-transformer-sharp",
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "images",
+        path: "./src/images/",
+      },
+      __key: "images",
     },
-    __key: "images"
-  },
-  {
-    resolve: 'gatsby-source-filesystem',
-    options: {
-      "name": "pages",
-      "path": "./src/pages/"
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "pages",
+        path: "./src/pages/",
+      },
+      __key: "pages",
     },
-    __key: "pages"
-  },
-  {
-    resolve: `gatsby-source-filesystem`,
-    options: {
-      name: `quiz`,
-      path: `${__dirname}/content/quiz`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `quiz`,
+        path: `${__dirname}/content/quiz`,
+      },
     },
-  },
-  {
-    resolve: `gatsby-plugin-page-creator`,
-    options: {
-      path: `${__dirname}/src/pages`,
+    {
+      resolve: `gatsby-plugin-page-creator`,
+      options: {
+        path: `${__dirname}/src/pages`,
+      },
     },
-  },
-  `gatsby-transformer-remark`,
-]
+    `gatsby-transformer-remark`,
+  ],
 };
