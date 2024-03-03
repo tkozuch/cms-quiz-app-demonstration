@@ -1,13 +1,20 @@
-# Content Editable Web Quiz App
+# <div id='s1' />Content Editable Web Quiz App
 
-This app's purpose is to provide UI for quiz creation for non-technical people (CMS layer).
+Quiz Game app with content customization.
 
-Administrator users will be able to access the `/admin` endpoint and in a friendly UI be able to
-configure quizzes, hosted on the website.
+- [First time access](#s1-1)
+- [Editing content](#s1-2)
+  - [Adding a quiz](#s1-2-1)
+  - [Editing a quiz](#s1-2-2)
+  - [Deleting a quiz](#s1-2-3)
+- [Limitations / features / issues](#s1-3)
+  - [Netlify](#s1-3-1)
+  - [Known issues](#s1-3-2)
+  - [Multiple same values](#s1-3-3)
+  - [Netlify admin panel](#s1-3-4)
+- [Dev notes](#s1-4)
 
-They will be able to provide simple quizzes for the app users to play.
-
-## First time access
+## <div id='s1-1' />First time access
 
 App is currently visible at:
 
@@ -17,11 +24,11 @@ and admin panel:
 
 > https://cms-quiz-app.netlify.app/admin/
 
-## Editing content
+## <div id='s1-2' />Editing content
 
 WARNING: All content edition actions, after clicking "Publish", or "Delete" will trigger site update command, and use a part of Netlify's build limit.
 
-### Adding a quiz
+### <div id='s1-2-1' />Adding a quiz
 
 go to the development website `/admin` url:
 
@@ -41,7 +48,7 @@ Click "Publish":
 
 ![alt text](docs/image-2.png)
 
-### Editing a quiz
+### <div id='s1-2-2' />Editing a quiz
 
 In main admin panel, click on a quiz to edit:
 
@@ -51,13 +58,13 @@ Change fields value, and click "Publish"
 
 ![alt text](docs/image-2.png)
 
-### Deleting a quiz
+### <div id='s1-2-3' />Deleting a quiz
 
 ![alt text](docs/image-6.png)
 
-## Limitations / features / issues
+## <div id='s1-3' />Limitations / features / issues
 
-### Netlify
+### <div id='s1-3-1' />Netlify
 
 Netlify in free plan has around 300 build minutes / month.
 
@@ -65,9 +72,9 @@ This allows for around 100-150 content alterations (100-150 site update commands
 
 Usual site update time is around 1-2min.
 
-### Known issues
+### <div id='s1-3-2' />Known issues
 
-#### Minor string format limitation
+#### <div id='s' />Minor string format limitation
 
 Where entering a string which seems like an hour format (for example "2:56"), it is being recognized as number
 and might prevent site from updating.
@@ -76,11 +83,11 @@ Best is to avoid hour-like strings, as values set in admin panel fields.
 
 This could be workedaround by adding a " " (space) or a letter to the string.
 
-### Multiple same values
+### <div id='s1-3-3' />Multiple same values
 
 At the time of writing it is best to avoid same values for subcategories within a quiz, or same answers values per quiz (also same answers in different subcategories of the same quiz are not currently supported).
 
-### Netlify admin panel
+### <div id='s1-3-4' />Netlify admin panel
 
 To enter the Website's hosting provider go to:
 
@@ -96,7 +103,7 @@ On the main dashboard page, you can see information like remaining build minutes
 
 Under "Builds", you can also see the status of latest-triggered website updates.
 
-## Dev notes
+## <div id='s1-4' />Dev notes
 
 Project is build with Gatsby and Decap CMS.
 
