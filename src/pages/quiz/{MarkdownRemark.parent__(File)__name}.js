@@ -168,7 +168,10 @@ const QuizPage = ({
     setQuizState(QUIZ_RUNNING);
     setTimeRemaining(quizTime);
     setAnswersState(getInitialAnswersState(quiz_data.subcategories));
-    answerRef.current.value = "";
+    if (answerRef.current) {
+      console.log("ans", answerRef.current);
+      answerRef.current.value = "";
+    }
   };
 
   useEffect(() => {
