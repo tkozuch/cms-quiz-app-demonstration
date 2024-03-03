@@ -7,6 +7,16 @@ configure quizzes, hosted on the website.
 
 They will be able to provide simple quizzes for the app users to play.
 
+## First time access
+
+App is currently visible at:
+
+> https://cms-quiz-app.netlify.app/
+
+and admin panel:
+
+> https://cms-quiz-app.netlify.app/admin/
+
 ## Editing content
 
 WARNING: All content edition actions, after clicking "Publish", or "Delete" will trigger site update command, and use a part of Netlify's build limit.
