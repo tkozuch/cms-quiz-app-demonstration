@@ -8,7 +8,7 @@ import Layout from "../../components/layout";
 
 /**
  *
- * @param {Array} subcategories
+ * @param {Array} subcategories - data from cms
  * @returns {number}
  */
 const getNumberOfQuestions = (subcategories) => {
@@ -46,20 +46,91 @@ const getTopPanelAnswersInfo = (quizState, correctAnswers, allAnswers) => {
   return `${correctAnswers}/${allAnswers}`;
 };
 
+/**
+ * Preformat answer for easier comparison.
+ *
+ *  */
+const preformatAnswer = (answer) => {
+  return answer.toLowerCase();
+};
+
+/**
+ * Get initial state for tracking which answers have been answered.
+ *
+ * ex. return:
+ *
+ *  {
+ *      answer_1: false,
+ *      answer_2: false,
+ *      answer_3: false,
+ *  }
+ *
+ *  @param {list[object]} subcategories - data from cms
+ *  @returns {object}
+ */
+const getInitialAnswersState = (subcategories) =>
+  subcategories.reduce((p, c) => {
+    let { answers } = c;
+    answers = answers.map((a) => preformatAnswer(a.value));
+    answers.forEach((a) => (p[a] = false));
+    return p;
+  }, {});
+
+const checkAllAnswersCorrect = (answersState) => {
+  let allCorrect = true;
+  let ans;
+  for (ans in answersState) {
+    allCorrect = allCorrect && answersState[ans];
+  }
+  return allCorrect;
+};
+
+const getAnswerStyling = (answer, answersState, quizState) => {
+  console.log("ans: ", answer);
+  let isCorrect = answersState[preformatAnswer(answer)] === true;
+
+  let correctStyling = " text-white bg-green-500 ";
+  let unanswared =
+    quizState === QUIZ_FINISHED || quizState === QUIZ_TIMESUP
+      ? " text-red-500 "
+      : " text-transparent ";
+
+  console.log("styling correct?", isCorrect);
+
+  return isCorrect ? correctStyling : unanswared;
+};
+
 const QuizPage = ({
   data, // this prop will be injected by the GraphQL query below.
 }) => {
   const { markdownRemark } = data; // data.markdownRemark holds your post data
   const quiz_data = markdownRemark.frontmatter;
-  const quizTime = 5;
+  const quizTime = 30;
 
   const [timeRemaining, setTimeRemaining] = useState(quizTime);
-  const [answeredQuestions, setAnsweredQuestions] = useState(0);
   const [quizState, setQuizState] = useState(QUIZ_NOT_STARTED);
-  const [answerState, setAnswerState] = useState();
+  const [answersState, setAnswersState] = useState(
+    getInitialAnswersState(quiz_data.subcategories)
+  );
+  console.log(answersState);
 
   const allAnswersCount = getNumberOfQuestions(quiz_data.subcategories);
   const correctAnswersCount = 0; // getCorrectAnswersCount(answerState);
+
+  const checkAnswer = (answer) => {
+    console.log(" checking ", preformatAnswer(answer), answersState);
+    // this means it is correct
+    if (preformatAnswer(answer) in answersState) {
+      console.log("setting as true");
+      const stateCopy = { ...answersState };
+      stateCopy[answer] = true;
+      setAnswersState(stateCopy);
+    }
+  };
+
+  useEffect(() => {
+    if (checkAllAnswersCorrect(answersState)) setQuizState(QUIZ_FINISHED);
+  }, [answersState]);
 
   useEffect(() => {
     let interval;
@@ -77,7 +148,7 @@ const QuizPage = ({
 
   return (
     <Layout>
-      <div className="h-full w-full flex flex-col font-bold capitalize">
+      <div className="h-full w-full flex flex-col font-bold capitalize bg-gre">
         {/* top-panel */}
         <div className="flex flex-col h-1/4 min-h-[200px]">
           {quizState !== QUIZ_TIMESUP ? (
@@ -123,6 +194,7 @@ const QuizPage = ({
                   <input
                     placeholder="Answer"
                     className="w-full h-full px-4 font-normal"
+                    onChange={(e) => checkAnswer(e.target.value)}
                   ></input>
                 )}
               </div>
@@ -137,6 +209,9 @@ const QuizPage = ({
                   onClick={() => {
                     setQuizState(QUIZ_RUNNING);
                     setTimeRemaining(quizTime);
+                    setAnswersState(
+                      getInitialAnswersState(quiz_data.subcategories)
+                    );
                   }}
                 >
                   <ArrowPathIcon />
@@ -162,7 +237,14 @@ const QuizPage = ({
                       {answers.map((answer, i) => (
                         <li
                           key={i}
-                          className="border borderstone-50 mt-2 text-transparent select-none"
+                          className={
+                            "mt-2 select-none border borderstone-50" +
+                            getAnswerStyling(
+                              answer.value,
+                              answersState,
+                              quizState
+                            )
+                          }
                         >
                           {answer.value}
                         </li>
