@@ -53,7 +53,6 @@ const getTopPanelAnswersInfo = (quizState, correctAnswers, allAnswers) => {
 
 /**
  * Format answer for consistency within the app.
- *
  *  */
 const formatAnswer = (answer) => {
   return answer.toLowerCase();
@@ -139,7 +138,7 @@ const QuizPage = ({
 }) => {
   const { markdownRemark } = data; // data.markdownRemark holds your post data
   const quiz_data = markdownRemark.frontmatter;
-  const quizTime = 30;
+  const quizTime = Number(quiz_data?.time) || 180;
   const answersReferences = getInitialAnswersRefrences(quiz_data.subcategories);
 
   const [timeRemaining, setTimeRemaining] = useState(quizTime);

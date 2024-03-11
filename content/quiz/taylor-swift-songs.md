@@ -1,5 +1,6 @@
 ---
 title: Taylor Swift Songs
+time: 180
 subcategories:
   - title: Taylor Swift
     answers:

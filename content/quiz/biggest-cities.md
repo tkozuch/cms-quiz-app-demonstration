@@ -1,5 +1,6 @@
 ---
 title: biggest cities
+time: 180
 subcategories:
   - title: North America
     answers:

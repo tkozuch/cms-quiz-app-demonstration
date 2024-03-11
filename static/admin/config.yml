@@ -20,6 +20,13 @@ collections:
       preview: false
     fields:
       - { label: "Title", name: "title", widget: "string" }
+      - {
+          default: 180,
+          label: "Time (seconds)",
+          name: "time",
+          widget: "number",
+          min: 1,
+        }
       - label: "Subcategories"
         label_singular: "Subcategory"
         name: "subcategories"
