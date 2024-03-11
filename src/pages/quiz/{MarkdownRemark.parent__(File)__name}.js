@@ -304,10 +304,10 @@ const QuizPage = ({
         {
           <div
             className={
-              // expand over parent
+              // expand over parent for small screens
               " left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] w-screen relative " +
-              // reset expanding
-              " md:static md:ml-0 md:mr-0 md:self-center md:w-auto " +
+              // reset expanding for bigger
+              " md:static md:ml-0 md:mr-0 md:w-auto md:self-center " +
               // basic setting
               " flex overflow-x-auto gap-4 snap-x snap-mandatory h-full mt-4 basis-11/12 grow md:max-w-[91.66667vw] xl:max-w-7xl " +
               // customizable setting
@@ -322,13 +322,10 @@ const QuizPage = ({
                 <div
                   className={
                     " w-[70vw] md:w-[25vw] shrink-0 grow max-w-[540px] border-2 bg-purple-200/40 snap-center first:ml-[15vw] last:mr-[15vw] p-2 mb-4 " +
-                    " md:first:ml-0 md:last:mr-0 "
-                    // (quiz_data.subcategories.length >= 4
-                    //   ? // dont apply margins if even number of cards, and they are scrollable (more or equal 4)
-                    //     // this makes them center nicely
-                    //     // " md:first:ml-0 md:last:mr-0"
-                    //     " md:first:ml-[5vw] md:last:mr-[5vw] "
-                    //   : " md:first:ml-[5vw] md:last:mr-[5vw] ")
+                    " md:first:ml-0 md:last:mr-0 " +
+                    (quiz_data.subcategories.length === 1
+                      ? " md:min-w-96 "
+                      : "")
                   }
                   key={i}
                 >
