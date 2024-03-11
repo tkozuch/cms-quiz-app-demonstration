@@ -30,8 +30,3 @@ body {
 body * {
   @apply rounded-sm box-border;
 }
-/* 
-input,
-button {
-  all: unset;
-} */

@@ -2,48 +2,11 @@ import * as React from "react";
 import { Link, graphql } from "gatsby";
 
 import Layout from "../components/layout";
-// /**
-//  * @param {array} array
-//  */
-// const divideIntoEqualColumns = (array) => {
-//   if (array.length <= 1) {
-//     return [array, []];
-//   }
-
-//   const divisionIndex = Math.ceil(array.length / 2); // 4/2 = 2, ceil(2) = 2; 3/2 = 1.5, ceil(1.5) = 2
-
-//   return [array.slice(0, divisionIndex + 1), array.slice(divisionIndex + 1)];
-// };
 
 const IndexPage = ({
   data, // this prop will be injected by the GraphQL query below.
 }) => {
   const { allMarkdownRemark } = data; // data.markdownRemark holds your post data
-
-  // data for UI testing purposes
-  // const dummyData = [];
-  // dummyData.push(
-  //   [
-  //     "dummy",
-  //     "dummy",
-  //     "dummy",
-  //     "dummy",
-  //     "dummy",
-  //     "dummy",
-  //     "dummy",
-  //     "dummy",
-  //     "Taylor Swift Songs",
-  //     "dummy",
-  //     "dummy",
-  //     "dummy",
-  //     "dummy",
-  //     "dummy",
-  //     "dummy",
-  //     "dummy",
-  //   ].map((x) => ({ frontmatter: { title: x } }))
-  // );
-  // const testData = allMarkdownRemark.nodes.concat(...dummyData);
-  // ----------------------------
 
   return (
     <Layout>

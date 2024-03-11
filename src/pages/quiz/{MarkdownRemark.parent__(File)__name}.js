@@ -257,7 +257,7 @@ const QuizPage = ({
                 <span className="ml-4">{formatTime(timeRemaining)}</span>
               </div>
               {/* title  */}
-              <div className="text-3xl justify-center items-center flex text-center overflow-ellipsis max-w-[600px] break-all max-h-[180px]">
+              <div className="text-3xl justify-center items-center flex text-center overflow-ellipsis max-w-[600px] break-normal [word-break:break-word] max-h-[180px]">
                 {quiz_data.title}
               </div>
               {/* space to show action item */}
