@@ -138,6 +138,7 @@ const QuizPage = ({
 }) => {
   const { markdownRemark } = data; // data.markdownRemark holds your post data
   const quiz_data = markdownRemark.frontmatter;
+  console.log("quiz_data", quiz_data);
   const quizTime = Number(quiz_data?.time) || 180;
   const answersReferences = getInitialAnswersRefrences(quiz_data.subcategories);
 
@@ -342,6 +343,7 @@ export const pageQuery = graphql`
     markdownRemark(id: { eq: $id }) {
       frontmatter {
         title
+        time
         subcategories {
           title
           answers {

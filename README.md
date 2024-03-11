@@ -108,3 +108,11 @@ Under "Builds", you can also see the status of latest-triggered website updates.
 Project is build with Gatsby and Decap CMS.
 
 To run the project locally for further development refer to the above framework providers.
+
+### Local development
+
+> gatsby develop
+
+and in another terminal, run server for local backend:
+
+> npx decap-server
