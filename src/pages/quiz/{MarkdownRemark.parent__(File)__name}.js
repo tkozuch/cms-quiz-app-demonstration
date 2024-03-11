@@ -272,8 +272,8 @@ const QuizPage = ({
         {
           <div
             className={
-              "flex self-auto lg:self-center overflow-x-auto w-screen relative left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] lg:left-0 lg:right-0 lg:ml-0 lg:mr-0 gap-4 snap-x snap-mandatory h-full mt-4" +
-              (quiz_data.subcategories.length < 4 ? " lg:justify-center " : "")
+              "flex self-auto md:self-center overflow-x-auto w-screen relative left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] md:left-0 md:right-0 md:ml-0 md:mr-0 gap-4 snap-x snap-mandatory h-full mt-4" +
+              (quiz_data.subcategories.length < 4 ? " md:justify-center " : "")
             }
           >
             {(quizState === QUIZ_RUNNING ||
@@ -283,12 +283,12 @@ const QuizPage = ({
                 // {/* card */}
                 <div
                   className={
-                    "w-[70vw] lg:w-[25vw] shrink-0 border-2 bg-purple-200/40 snap-center first:ml-[15vw] last:mr-[15vw] p-2 mb-4" +
+                    "w-[70vw] md:w-[25vw] shrink-0 grow max-w-[540px] border-2 bg-purple-200/40 snap-center first:ml-[15vw] last:mr-[15vw] p-2 mb-4" +
                     (quiz_data.subcategories.length >= 4
                       ? // dont apply margins if even number of cards, and they are scrollable (more or equal 4)
                         // this makes them center nicely
-                        " lg:first:ml-0 lg:last:mr-0"
-                      : " lg:first:ml-[5vw] lg:last:mr-[5vw] ")
+                        " md:first:ml-0 md:last:mr-0"
+                      : " md:first:ml-[5vw] md:last:mr-[5vw] ")
                   }
                   key={i}
                 >
