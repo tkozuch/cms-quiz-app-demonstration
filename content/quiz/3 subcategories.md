@@ -2,7 +2,7 @@
 title: 3 subcat
 time: 131
 subcategories:
-  - title: test quiz
+  - title: subcategory with long name and answers
     answers:
       - value: test quiz asdf asdf asdf asdfasdfsdfasdfasdfasdfasdfsdf sadf
       - value: test 2

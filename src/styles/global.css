@@ -27,6 +27,6 @@ body {
   align-items: center;
 }
 
-* {
+body * {
   @apply rounded-sm box-border;
 }

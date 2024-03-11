@@ -321,7 +321,7 @@ const QuizPage = ({
                 // {/* card */}
                 <div
                   className={
-                    " w-[70vw] md:w-[25vw] shrink-0 grow max-w-[540px] border-2 bg-purple-200/40 snap-center first:ml-[15vw] last:mr-[15vw] p-2 mb-4 " +
+                    " flex flex-col w-[70vw] md:w-[25vw] shrink-0 grow max-w-[540px] border-2 bg-purple-200/40 snap-center first:ml-[15vw] last:mr-[15vw] p-2 mb-4 " +
                     " md:first:ml-0 md:last:mr-0 break-words " +
                     (quiz_data.subcategories.length === 1
                       ? " md:min-w-96 "
@@ -330,7 +330,7 @@ const QuizPage = ({
                   key={i}
                 >
                   <h3 className="text-xl text-center px-4 py-2">{title}</h3>
-                  <ul className="overflow-y-auto max-h-[90%]">
+                  <ul className="overflow-y-auto">
                     {answers.map((answer, i) => (
                       <li
                         key={i}
