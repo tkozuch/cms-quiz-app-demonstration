@@ -229,9 +229,9 @@ const QuizPage = ({
 
   return (
     <Layout>
-      <div className="h-full w-full flex flex-col font-bold capitalize bg-gre">
+      <div className="h-full w-full flex flex-col font-bold capitalize ">
         {/* top-panel */}
-        <div className="flex flex-col h-1/4 min-h-[200px] items-center">
+        <div className="flex flex-col min-h-[200px] items-center justify-between gap-4 sm:gap-8 grow mb-8">
           {quizState !== QUIZ_TIMESUP ? (
             <>
               <div className="flex justify-between text-xl w-full max-w-[600px]">
@@ -256,11 +256,12 @@ const QuizPage = ({
                   )}
                 <span className="ml-4">{formatTime(timeRemaining)}</span>
               </div>
-              <div className="text-3xl grow justify-center items-center flex text-center overflow-ellipsis">
+              {/* title  */}
+              <div className="text-3xl justify-center items-center flex text-center overflow-ellipsis max-w-[600px] break-all max-h-[180px]">
                 {quiz_data.title}
               </div>
               {/* space to show action item */}
-              <div className="flex justify-center w-full max-w-[600px] mt-auto h-1/3 text-xl max-h-[50px] min-h-[20px] self-center">
+              <div className="flex justify-center shrink-0 w-full max-w-[600px] h-1/3 text-xl max-h-[50px] min-h-[20px] self-center">
                 {quizState === QUIZ_NOT_STARTED ? (
                   <button
                     className="bg-stone-300 w-full h-full flex justify-center items-center"
@@ -269,19 +270,23 @@ const QuizPage = ({
                     Start Quiz <PlayIcon className="h-full scale-50" />
                   </button>
                 ) : quizState === QUIZ_PAUSED ? (
-                  <button
-                    className="bg-yellow-300 w-full h-full flex justify-center items-center"
-                    onClick={() => setQuizState(QUIZ_RUNNING)}
-                  >
-                    Resume <PlayIcon className="h-full scale-50" />
-                  </button>
+                  <>
+                    <button
+                      className="bg-yellow-300 w-full h-14 flex justify-center items-center"
+                      onClick={() => setQuizState(QUIZ_RUNNING)}
+                    >
+                      Resume <PlayIcon className="h-full scale-50" />
+                    </button>
+                  </>
                 ) : (
-                  <input
-                    ref={answerRef}
-                    placeholder="Answer"
-                    className="w-full h-full px-4 font-normal"
-                    onChange={(e) => checkAnswer(e.target.value)}
-                  ></input>
+                  <>
+                    <input
+                      ref={answerRef}
+                      placeholder="Answer"
+                      className="w-full h-14 px-4 font-normal"
+                      onChange={(e) => checkAnswer(e.target.value)}
+                    ></input>
+                  </>
                 )}
               </div>
             </>
@@ -309,47 +314,46 @@ const QuizPage = ({
               // reset expanding for bigger
               " md:static md:ml-0 md:mr-0 md:w-auto md:self-center " +
               // basic setting
-              " flex overflow-x-auto gap-4 snap-x snap-mandatory h-full mt-4 basis-11/12 grow md:max-w-[91.66667vw] xl:max-w-7xl " +
+              " flex grow-[5] overflow-x-auto gap-8 snap-x snap-mandatory md:max-w-[91.66667vw] xl:max-w-7xl " +
               // customizable setting
-              (quiz_data.subcategories.length < 3 ? " md:justify-center " : "")
+              (quiz_data.subcategories.length < 3
+                ? " md:justify-center "
+                : "") +
+              // hide if quiz not started - otherwise the container provide appropriate space
+              (quizState === QUIZ_RUNNING ||
+              quizState === QUIZ_TIMESUP ||
+              quizState === QUIZ_FINISHED
+                ? ""
+                : " invisible ")
             }
           >
-            {(quizState === QUIZ_RUNNING ||
-              quizState === QUIZ_TIMESUP ||
-              quizState === QUIZ_FINISHED) &&
-              quiz_data.subcategories.map(({ title, answers }, i) => (
-                // {/* card */}
-                <div
-                  className={
-                    " flex flex-col w-[70vw] md:w-[25vw] shrink-0 grow max-w-[540px] border-2 bg-purple-200/40 snap-center first:ml-[15vw] last:mr-[15vw] p-2 mb-4 " +
-                    " md:first:ml-0 md:last:mr-0 break-words " +
-                    (quiz_data.subcategories.length === 1
-                      ? " md:min-w-96 "
-                      : "")
-                  }
-                  key={i}
-                >
-                  <h3 className="text-xl text-center px-4 py-2">{title}</h3>
-                  <ul className="overflow-y-auto">
-                    {answers.map((answer, i) => (
-                      <li
-                        key={i}
-                        className={
-                          "px-4 py-1 mt-2 select-none border-2 " +
-                          getAnswerStyling(
-                            answer.value,
-                            answersState,
-                            quizState
-                          )
-                        }
-                        ref={answersReferences[formatAnswer(answer.value)]}
-                      >
-                        {answer.value}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+            {quiz_data.subcategories.map(({ title, answers }, i) => (
+              // {/* card */}
+              <div
+                className={
+                  " flex flex-col w-[70vw] md:w-[25vw] shrink-0 grow max-w-[540px] border-2 bg-purple-200/40 snap-center first:ml-[15vw] last:mr-[15vw] p-2 mb-4 " +
+                  " md:first:ml-0 md:last:mr-0 break-words " +
+                  (quiz_data.subcategories.length === 1 ? " md:min-w-96 " : "")
+                }
+                key={i}
+              >
+                <h3 className="text-xl text-center px-4 py-2">{title}</h3>
+                <ul className="overflow-y-auto">
+                  {answers.map((answer, i) => (
+                    <li
+                      key={i}
+                      className={
+                        "px-4 py-1 mt-2 select-none border-2 " +
+                        getAnswerStyling(answer.value, answersState, quizState)
+                      }
+                      ref={answersReferences[formatAnswer(answer.value)]}
+                    >
+                      {answer.value}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         }
       </div>

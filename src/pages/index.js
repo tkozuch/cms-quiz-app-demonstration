@@ -51,7 +51,7 @@ const IndexPage = ({
         Today's quizzes:
       </h1>
       <ul
-        className="flex flex-wrap w-full gap-x-[--gapx] gap-y-2 justify-between max-h-[70vh] overflow-y-auto"
+        className="flex flex-wrap w-full gap-x-[--gapx] gap-y-8 max-h-[70vh] overflow-y-auto items-center break-words"
         style={{ "--gapx": "4rem" }}
       >
         {allMarkdownRemark.nodes.map((quiz) => (
@@ -60,7 +60,7 @@ const IndexPage = ({
             className="flex flex-col flex-wrap w-full md:w-[--md-width] text-center "
             style={{ "--md-width": "calc(25% - var(--gapx))" }}
           >
-            <Link to={quiz.gatsbyPath} className="text-xl">
+            <Link to={quiz.gatsbyPath} className="text-xl max-w-full">
               {quiz.frontmatter.title}
             </Link>
           </li>
