@@ -133,6 +133,24 @@ const getAnswerStyling = (answer, answersState, quizState) => {
   return isCorrect ? correctStyling : unanswared;
 };
 
+/**
+ * Adjust initial scroll position for subcategories container.
+ *
+ * Only visual pleasancy purposes. Not critical.
+ *
+ * @param {list[object]} subcategories - data from cms
+ */
+const adjustSubcategoriesScrollPosition = (
+  subcategories,
+  answersReferences
+) => {
+  let middleIndex = Math.ceil(subcategories.length / 2) - 1; // 3 for 5, 2 for 4 etc; subtract 1 to accomodate for 0 element
+  let answerFromSecondSubcategory = subcategories[middleIndex].answers[0].value;
+  answersReferences[
+    formatAnswer(answerFromSecondSubcategory)
+  ].current?.scrollIntoView({ inline: "center" });
+};
+
 const QuizPage = ({
   data, // this prop will be injected by the GraphQL query below.
 }) => {
@@ -161,6 +179,7 @@ const QuizPage = ({
       setAnswersState(stateCopy);
       answersReferences[formatAnswer(answer)].current?.scrollIntoView({
         behavior: "smooth",
+        inline: "center",
       });
     }
   };
@@ -194,6 +213,19 @@ const QuizPage = ({
 
     return () => interval && clearInterval(interval);
   }, [quizState, timeRemaining]);
+
+  useEffect(() => {
+    if (quizState === QUIZ_RUNNING && quiz_data.subcategories.length >= 3) {
+      try {
+        adjustSubcategoriesScrollPosition(
+          quiz_data.subcategories,
+          answersReferences
+        );
+      } catch {
+        // don't block program if failed.
+      }
+    }
+  }, [quizState]);
 
   return (
     <Layout>
@@ -272,8 +304,14 @@ const QuizPage = ({
         {
           <div
             className={
-              "flex self-auto md:self-center overflow-x-auto w-screen relative left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] md:left-0 md:right-0 md:ml-0 md:mr-0 gap-4 snap-x snap-mandatory h-full mt-4" +
-              (quiz_data.subcategories.length < 4 ? " md:justify-center " : "")
+              // expand over parent
+              " left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] w-screen relative " +
+              // reset expanding
+              " md:static md:ml-0 md:mr-0 md:self-center md:w-auto " +
+              // basic setting
+              " flex overflow-x-auto gap-4 snap-x snap-mandatory h-full mt-4 basis-11/12 grow md:max-w-[91.66667vw] xl:max-w-7xl " +
+              // customizable setting
+              (quiz_data.subcategories.length < 3 ? " md:justify-center " : "")
             }
           >
             {(quizState === QUIZ_RUNNING ||
@@ -283,12 +321,14 @@ const QuizPage = ({
                 // {/* card */}
                 <div
                   className={
-                    "w-[70vw] md:w-[25vw] shrink-0 grow max-w-[540px] border-2 bg-purple-200/40 snap-center first:ml-[15vw] last:mr-[15vw] p-2 mb-4" +
-                    (quiz_data.subcategories.length >= 4
-                      ? // dont apply margins if even number of cards, and they are scrollable (more or equal 4)
-                        // this makes them center nicely
-                        " md:first:ml-0 md:last:mr-0"
-                      : " md:first:ml-[5vw] md:last:mr-[5vw] ")
+                    " w-[70vw] md:w-[25vw] shrink-0 grow max-w-[540px] border-2 bg-purple-200/40 snap-center first:ml-[15vw] last:mr-[15vw] p-2 mb-4 " +
+                    " md:first:ml-0 md:last:mr-0 "
+                    // (quiz_data.subcategories.length >= 4
+                    //   ? // dont apply margins if even number of cards, and they are scrollable (more or equal 4)
+                    //     // this makes them center nicely
+                    //     // " md:first:ml-0 md:last:mr-0"
+                    //     " md:first:ml-[5vw] md:last:mr-[5vw] "
+                    //   : " md:first:ml-[5vw] md:last:mr-[5vw] ")
                   }
                   key={i}
                 >

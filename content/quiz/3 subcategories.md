@@ -8,10 +8,10 @@ subcategories:
       - value: test 2
   - title: sub 2
     answers:
-      - value: "3"
       - value: "4"
+      - value: "6"
   - title: sub 3
     answers:
-      - value: "3"
-      - value: "4"
+      - value: "5"
+      - value: "6"
 ---

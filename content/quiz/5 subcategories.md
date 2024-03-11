@@ -12,14 +12,14 @@ subcategories:
       - value: "4"
   - title: sub 2
     answers:
-      - value: "3"
-      - value: "4"
+      - value: "5"
+      - value: "6"
   - title: sub 2
     answers:
-      - value: "3"
-      - value: "4"
+      - value: "7"
+      - value: "8"
   - title: sub 2
     answers:
-      - value: "3"
-      - value: "4"
+      - value: "9"
+      - value: "10"
 ---
