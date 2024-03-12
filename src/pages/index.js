@@ -14,16 +14,22 @@ const IndexPage = ({
         Today's quizzes:
       </h1>
       <ul
-        className="flex flex-wrap w-full gap-x-[--gapx] gap-y-8 max-h-[70vh] overflow-y-auto items-center break-words"
+        className="flex flex-wrap w-full gap-x-[--gapx] gap-y-8 max-h-[70vh] overflow-y-auto items-center break-words "
         style={{ "--gapx": "4rem" }}
       >
         {allMarkdownRemark.nodes.map((quiz) => (
           <li
             key={quiz.gatsbyPath}
-            className="flex flex-col flex-wrap w-full md:w-[--md-width] text-center "
-            style={{ "--md-width": "calc(25% - var(--gapx))" }}
+            className="flex flex-col flex-wrap w-full md:w-[--md-width] lg:w-[--lg-width] text-center"
+            style={{
+              "--lg-width": "calc(25% - var(--gapx))",
+              "--md-width": "calc(33.3333% - var(--gapx))",
+            }}
           >
-            <Link to={quiz.gatsbyPath} className="text-xl max-w-full">
+            <Link
+              to={quiz.gatsbyPath}
+              className="text-xl max-w-full text-green-900 underline underline-offset-2 hover:text-green-700 transition-[color]"
+            >
               {quiz.frontmatter.title}
             </Link>
           </li>

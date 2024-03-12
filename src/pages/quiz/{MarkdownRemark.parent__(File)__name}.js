@@ -156,7 +156,6 @@ const QuizPage = ({
 }) => {
   const { markdownRemark } = data; // data.markdownRemark holds your post data
   const quiz_data = markdownRemark.frontmatter;
-  console.log("quiz_data", quiz_data);
   const quizTime = Number(quiz_data?.time) || 180;
   const answersReferences = getInitialAnswersRefrences(quiz_data.subcategories);
 
@@ -179,6 +178,7 @@ const QuizPage = ({
       setAnswersState(stateCopy);
       answersReferences[formatAnswer(answer)].current?.scrollIntoView({
         behavior: "smooth",
+        block: "end",
         inline: "center",
       });
     }
@@ -245,15 +245,20 @@ const QuizPage = ({
                 <Link to="/" className="ml-4 mr-auto">
                   <HomeIcon className="w-6" />
                 </Link>
-                {quizState !== QUIZ_PAUSED &&
-                  quizState !== QUIZ_NOT_STARTED && (
-                    <button
-                      className="bg-yellow-200 ml-auto w-6 px-1 box-content"
-                      onClick={() => setQuizState(QUIZ_PAUSED)}
-                    >
-                      <PauseIcon />
-                    </button>
-                  )}
+                {
+                  <button
+                    className={
+                      "bg-yellow-200 ml-auto w-6 px-1 box-content " +
+                      (quizState !== QUIZ_PAUSED &&
+                      quizState !== QUIZ_NOT_STARTED
+                        ? " "
+                        : " opacity-0 ")
+                    }
+                    onClick={() => setQuizState(QUIZ_PAUSED)}
+                  >
+                    <PauseIcon />
+                  </button>
+                }
                 <span className="ml-4">{formatTime(timeRemaining)}</span>
               </div>
               {/* title  */}
@@ -314,7 +319,7 @@ const QuizPage = ({
               // reset expanding for bigger
               " md:static md:ml-0 md:mr-0 md:w-auto md:self-center " +
               // basic setting
-              " flex grow-[5] overflow-x-auto gap-8 snap-x snap-mandatory md:max-w-[91.66667vw] xl:max-w-7xl " +
+              " flex grow-[5] overflow-x-auto gap-8 snap-x snap-mandatory md:max-w-[91.66667vw] xl:max-w-7xl transition-opacity" +
               // customizable setting
               (quiz_data.subcategories.length < 3
                 ? " md:justify-center "
@@ -324,7 +329,7 @@ const QuizPage = ({
               quizState === QUIZ_TIMESUP ||
               quizState === QUIZ_FINISHED
                 ? ""
-                : " invisible ")
+                : " opacity-0 ")
             }
           >
             {quiz_data.subcategories.map(({ title, answers }, i) => (
