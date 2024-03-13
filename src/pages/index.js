@@ -2,6 +2,7 @@ import * as React from "react";
 import { Link, graphql } from "gatsby";
 
 import Layout from "../components/layout";
+import logo from "../images/logo-quizzes-font-honk.png";
 
 const IndexPage = ({
   data, // this prop will be injected by the GraphQL query below.
@@ -10,12 +11,13 @@ const IndexPage = ({
 
   return (
     <Layout>
-      <h1 className="text-6xl sm:text-7xl mb-24 text-center ">
-        Today's quizzes:
-      </h1>
+      <img src={logo} alt="Logo" />
       <ul
-        className="flex flex-wrap w-full gap-x-[--gapx] gap-y-8 max-h-[70vh] overflow-y-auto items-center break-words "
-        style={{ "--gapx": "4rem" }}
+        className="flex flex-wrap w-full gap-x-[--gapx] gap-y-8 max-h-[70vh] overflow-y-auto items-center break-words py-[10%] sm:py-0
+        [--mask:linear-gradient(0deg,#0000,#000_10%_90%,#0000)] sm:[--mask:none] [-webkit-mask:--mask] [mask:--mask] "
+        style={{
+          "--gapx": "4rem",
+        }}
       >
         {allMarkdownRemark.nodes.map((quiz) => (
           <li

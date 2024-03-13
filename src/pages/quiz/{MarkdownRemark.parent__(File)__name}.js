@@ -170,17 +170,23 @@ const QuizPage = ({
   const allAnswersCount = getNumberOfQuestions(quiz_data.subcategories);
   const correctAnswersCount = getCorrectAnswersCount(answersState);
 
-  const checkAnswer = (answer) => {
-    // this means it is correct
-    if (formatAnswer(answer) in answersState) {
-      const stateCopy = { ...answersState };
-      stateCopy[formatAnswer(answer)] = true;
-      setAnswersState(stateCopy);
-      answersReferences[formatAnswer(answer)].current?.scrollIntoView({
-        behavior: "smooth",
-        block: "end",
-        inline: "center",
-      });
+  const handleAnswerKeyDown = (e) => {
+    if (
+      ("key" in e && e.key === "Enter") ||
+      ("keyCode" in e && e.keyCode == 13)
+    ) {
+      let answer = e.target.value;
+      // this means it is correct
+      if (formatAnswer(answer) in answersState) {
+        const stateCopy = { ...answersState };
+        stateCopy[formatAnswer(answer)] = true;
+        setAnswersState(stateCopy);
+        answersReferences[formatAnswer(answer)].current?.scrollIntoView({
+          behavior: "smooth",
+          block: "end",
+          inline: "center",
+        });
+      }
     }
   };
   const resetQuiz = () => {
@@ -262,7 +268,7 @@ const QuizPage = ({
                 <span className="ml-4">{formatTime(timeRemaining)}</span>
               </div>
               {/* title  */}
-              <div className="text-3xl justify-center items-center flex text-center overflow-ellipsis max-w-[600px] break-normal [word-break:break-word] max-h-[180px]">
+              <div className="text-3xl justify-center items-start overflow-hidden flex text-center overflow-ellipsis max-w-[600px] break-normal [word-break:break-word] max-h-[180px]">
                 {quiz_data.title}
               </div>
               {/* space to show action item */}
@@ -289,7 +295,7 @@ const QuizPage = ({
                       ref={answerRef}
                       placeholder="Answer"
                       className="w-full h-14 px-4 font-normal"
-                      onChange={(e) => checkAnswer(e.target.value)}
+                      onKeyDown={(e) => handleAnswerKeyDown(e)}
                     ></input>
                   </>
                 )}
