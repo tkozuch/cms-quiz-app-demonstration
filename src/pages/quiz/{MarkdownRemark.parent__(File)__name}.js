@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useState, useEffect, useRef } from "react";
 import { Link, graphql } from "gatsby";
-
 import {
   PlayIcon,
   PauseIcon,
@@ -9,6 +8,7 @@ import {
   HomeIcon,
 } from "@heroicons/react/24/solid";
 
+import logo from "../../images/logo-quizzes-font-honk.png";
 import Layout from "../../components/layout";
 
 const QUIZ_NOT_STARTED = "QUIZ_NOT_STARTED";
@@ -240,16 +240,9 @@ const QuizPage = ({
         <div className="flex flex-col min-h-[200px] items-center justify-between gap-4 sm:gap-8 grow mb-8">
           {quizState !== QUIZ_TIMESUP ? (
             <>
-              <div className="flex justify-between text-xl w-full max-w-[600px]">
-                <span>
-                  {getTopPanelAnswersInfo(
-                    quizState.started,
-                    correctAnswersCount,
-                    allAnswersCount
-                  )}
-                </span>
-                <Link to="/" className="ml-4 mr-auto">
-                  <HomeIcon className="w-6" />
+              <div className="flex text-xl w-full max-w-[600px]">
+                <Link to="/" className="ml-4 mr-4">
+                  <img src={logo} alt="logo" className="h-8" />
                 </Link>
                 {
                   <button
@@ -266,6 +259,13 @@ const QuizPage = ({
                   </button>
                 }
                 <span className="ml-4">{formatTime(timeRemaining)}</span>
+                <span className="ml-4">
+                  {getTopPanelAnswersInfo(
+                    quizState.started,
+                    correctAnswersCount,
+                    allAnswersCount
+                  )}
+                </span>
               </div>
               {/* title  */}
               <div className="text-3xl justify-center items-start overflow-hidden flex text-center overflow-ellipsis max-w-[600px] break-normal [word-break:break-word] max-h-[180px]">

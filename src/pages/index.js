@@ -7,7 +7,7 @@ import logo from "../images/logo-quizzes-font-honk.png";
 const IndexPage = ({
   data, // this prop will be injected by the GraphQL query below.
 }) => {
-  const { allMarkdownRemark } = data; // data.markdownRemark holds your post data
+  const { allMarkdownRemark } = data;
 
   return (
     <Layout>
