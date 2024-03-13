@@ -1,12 +1,7 @@
 import * as React from "react";
 import { useState, useEffect, useRef } from "react";
 import { Link, graphql } from "gatsby";
-import {
-  PlayIcon,
-  PauseIcon,
-  ArrowPathIcon,
-  HomeIcon,
-} from "@heroicons/react/24/solid";
+import { PlayIcon, PauseIcon, ArrowPathIcon } from "@heroicons/react/24/solid";
 
 import logo from "../../images/logo-quizzes-font-honk.png";
 import Layout from "../../components/layout";
@@ -321,7 +316,7 @@ const QuizPage = ({
           <div
             className={
               // expand over parent for small screens
-              " left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] w-screen relative " +
+              " left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] w-screen relative" +
               // reset expanding for bigger
               " md:static md:ml-0 md:mr-0 md:w-auto md:self-center " +
               // basic setting
@@ -369,7 +364,7 @@ const QuizPage = ({
         }
       </div>
       <dialog
-        className="open:flex flex-col items-center w-[90vw] max-w-md p-8 h-fit backdrop:bg-black/40"
+        className="open:flex flex-col items-center w-[90vw] max-w-md p-8 h-fit backdrop:bg-black/40 backdrop:animate-show_long opacity-0 animate-show_long [animation-duration:1000ms]"
         ref={dialogRef}
       >
         <p className="text-xl text-green-400 font-bold">Congratulations!</p>
