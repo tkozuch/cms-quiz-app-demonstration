@@ -187,6 +187,7 @@ const QuizPage = ({
           inline: "center",
         });
       }
+      e.preventDefault();
     }
   };
   const resetQuiz = () => {
@@ -194,7 +195,6 @@ const QuizPage = ({
     setTimeRemaining(quizTime);
     setAnswersState(getInitialAnswersState(quiz_data.subcategories));
     if (answerRef.current) {
-      console.log("ans", answerRef.current);
       answerRef.current.value = "";
     }
   };

@@ -4,6 +4,10 @@ time: 180
 subcategories:
   - title: test sub
     answers:
-      - value: value
-      - value: value2
+      - value: asdf
+      - value: xxxx
+  - title: new
+    answers:
+      - value: hhh
+      - value: ddd
 ---
