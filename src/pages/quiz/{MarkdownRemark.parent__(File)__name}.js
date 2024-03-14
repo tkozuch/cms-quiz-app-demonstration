@@ -397,15 +397,17 @@ const QuizPage = ({
         }
       </div>
       <dialog
-        className="open:flex flex-col items-center w-[90vw] max-w-md p-8 h-fit backdrop:bg-black/40 backdrop:animate-show_long opacity-0 animate-show_long [animation-duration:1000ms]"
+        className="open:flex flex-col items-center w-[90vw] max-w-md p-8 md:p-16 h-fit backdrop:bg-black/40 backdrop:animate-show_long opacity-0 animate-show_long [animation-duration:1000ms]"
         ref={dialogRef}
       >
-        <p className="text-xl text-green-400 font-bold">Congratulations!</p>
-        <p className="mt-5 text-center">
+        <p className="text-xl md:text-3xl text-green-500 font-bold">
+          Congratulations!
+        </p>
+        <p className="mt-5 md:mt-8 text-center md:text-xl">
           You've guessed all the questions correctly!
         </p>
         <button
-          className="mt-8 bg-teal-200/50 border-2 border-black/80 p-2"
+          className="mt-8 md:mt-12 bg-teal-200/50 border-2 border-black/80 p-2 md:text-xl"
           onClick={() => {
             dialogRef.current.close();
             resetQuiz();
