@@ -154,7 +154,7 @@ const QuizPage = ({
   const quizTime = Number(quiz_data?.time) || 180;
   const answersReferences = getInitialAnswersRefrences(quiz_data.subcategories);
 
-  const [timeRemaining, setTimeRemaining] = useState(quizTime);
+  const [timeRemaining, setTimeRemaining] = useState(3);
   const [quizState, setQuizState] = useState(QUIZ_NOT_STARTED);
   const [answersState, setAnswersState] = useState(
     getInitialAnswersState(quiz_data.subcategories)
@@ -286,7 +286,7 @@ const QuizPage = ({
             <div
               className={
                 // make it absolute, so that it doesn't take any space, and thus no layout shift when changing from "title" to "Time's up" fields
-                "absolute flex self-center justify-center items-center w-fit text-4xl  top-1/2 -translate-y-1/2" +
+                "absolute z-10 flex self-center justify-center items-center w-fit text-4xl  top-1/2 -translate-y-1/2 " +
                 (quizState === QUIZ_TIMESUP ? "" : " opacity-0 ")
               }
             >
