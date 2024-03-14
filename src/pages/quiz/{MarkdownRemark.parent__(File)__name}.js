@@ -93,7 +93,10 @@ const getInitialAnswersRefrences = (subcategories) => {
   return subcategories.reduce((p, c) => {
     let { answers } = c;
     answers = answers.map((a) => formatAnswer(a.value));
-    answers.forEach((a) => (p[a] = useRef(null)));
+    answers.forEach((a) => {
+      const [inView, setInView] = useState(false);
+      p[a] = { ref: useRef(null), inView: inView, setInView: setInView };
+    });
     return p;
   }, {});
 };
@@ -116,18 +119,6 @@ const getCorrectAnswersCount = (answersState) => {
   return count;
 };
 
-const getAnswerStyling = (answer, answersState, quizState) => {
-  let isCorrect = answersState[formatAnswer(answer)] === true;
-
-  let correctStyling = " text-white bg-green-500 ";
-  let unanswared =
-    quizState === QUIZ_FINISHED || quizState === QUIZ_TIMESUP
-      ? " text-red-500 border-red-500 bg-white/50"
-      : " text-transparent bg-white/50";
-
-  return isCorrect ? correctStyling : unanswared;
-};
-
 /**
  * Adjust initial scroll position for subcategories container.
  *
@@ -143,12 +134,25 @@ const adjustSubcategoriesScrollPosition = (
   let answerFromSecondSubcategory = subcategories[middleIndex].answers[0].value;
   answersReferences[
     formatAnswer(answerFromSecondSubcategory)
-  ].current?.scrollIntoView({ inline: "center" });
+  ].ref.current?.scrollIntoView({ inline: "center" });
 };
 
 const QuizPage = ({
   data, // this prop will be injected by the GraphQL query below.
 }) => {
+  const getAnswerStyling = (answer, answersState, quizState, isInView) => {
+    let isCorrect = answersState[formatAnswer(answer)] === true;
+
+    let correctStyling =
+      " text-white bg-white/50 " + (isInView ? " animate-correct_answer " : "");
+    let unanswared =
+      quizState === QUIZ_FINISHED || quizState === QUIZ_TIMESUP
+        ? " text-red-500 border-red-500 bg-white/50"
+        : " text-transparent bg-white/50";
+
+    return isCorrect ? correctStyling : unanswared;
+  };
+
   const { markdownRemark } = data; // data.markdownRemark holds your post data
   const quiz_data = markdownRemark.frontmatter;
   const quizTime = Number(quiz_data?.time) || 180;
@@ -176,7 +180,7 @@ const QuizPage = ({
         const stateCopy = { ...answersState };
         stateCopy[formatAnswer(answer)] = true;
         setAnswersState(stateCopy);
-        answersReferences[formatAnswer(answer)].current?.scrollIntoView({
+        answersReferences[formatAnswer(answer)].ref.current?.scrollIntoView({
           behavior: "smooth",
           block: "end",
           inline: "center",
@@ -227,6 +231,31 @@ const QuizPage = ({
       }
     }
   }, [quizState]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (
+            !entry.isIntersecting &&
+            // this means animation was shown already and we don't want to do anything. prevent animations multiple triggers on scroll-in/out
+            entry.target.classList.contains("animate-correct_answer")
+          )
+            return;
+          answersReferences[formatAnswer(entry.target.innerHTML)].setInView(
+            entry.isIntersecting
+          );
+        });
+      },
+      {
+        threshold: 0.5,
+      }
+    );
+    Object.values(answersReferences).forEach(({ ref }) =>
+      observer.observe(ref.current)
+    );
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <Layout>
@@ -377,15 +406,20 @@ const QuizPage = ({
                 key={i}
               >
                 <h3 className="text-xl text-center px-4 py-2">{title}</h3>
-                <ul className="overflow-y-auto">
+                <ul className="overflow-y-auto [--unanswered-answer:rgb(255,255,255)] [--correct-answer:rgb(34,197,94)] ">
                   {answers.map((answer, i) => (
                     <li
                       key={i}
                       className={
                         "px-4 py-1 mt-2 select-none border-2 " +
-                        getAnswerStyling(answer.value, answersState, quizState)
+                        getAnswerStyling(
+                          answer.value,
+                          answersState,
+                          quizState,
+                          answersReferences[formatAnswer(answer.value)].inView
+                        )
                       }
-                      ref={answersReferences[formatAnswer(answer.value)]}
+                      ref={answersReferences[formatAnswer(answer.value)].ref}
                     >
                       {answer.value}
                     </li>
