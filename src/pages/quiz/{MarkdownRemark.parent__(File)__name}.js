@@ -232,84 +232,106 @@ const QuizPage = ({
     <Layout>
       <div className="h-full w-full flex flex-col font-bold capitalize ">
         {/* top-panel */}
-        <div className="flex flex-col min-h-[200px] items-center justify-between gap-4 sm:gap-8 grow mb-8">
-          {quizState !== QUIZ_TIMESUP ? (
-            <>
-              <div className="flex text-xl w-full max-w-[600px]">
-                <Link to="/" className="ml-4 mr-4">
-                  <img src={logo} alt="logo" className="h-8" />
-                </Link>
-                {
-                  <button
-                    className={
-                      "bg-yellow-200 ml-auto w-6 px-1 box-content " +
-                      (quizState !== QUIZ_PAUSED &&
-                      quizState !== QUIZ_NOT_STARTED
-                        ? " "
-                        : " opacity-0 ")
-                    }
-                    onClick={() => setQuizState(QUIZ_PAUSED)}
-                  >
-                    <PauseIcon />
-                  </button>
-                }
+        <div
+          className={
+            "flex flex-col min-h-[200px] items-center justify-between gap-4 sm:gap-8 grow mb-8" +
+            // for Time's up positioning
+            " relative "
+          }
+        >
+          <>
+            <div className="flex text-xl w-full max-w-[600px]">
+              <Link to="/" className="ml-4 mr-4">
+                <img src={logo} alt="logo" className="h-8" />
+              </Link>
+              {
+                <button
+                  className={
+                    "bg-yellow-200 ml-auto w-6 px-1 box-content " +
+                    (quizState !== QUIZ_PAUSED &&
+                    quizState !== QUIZ_NOT_STARTED &&
+                    quizState !== QUIZ_TIMESUP
+                      ? " "
+                      : " opacity-0 ")
+                  }
+                  onClick={() => setQuizState(QUIZ_PAUSED)}
+                >
+                  <PauseIcon />
+                </button>
+              }
+              {quizState !== QUIZ_TIMESUP && (
                 <span className="ml-4">{formatTime(timeRemaining)}</span>
-                <span className="ml-4">
-                  {getTopPanelAnswersInfo(
-                    quizState.started,
-                    correctAnswersCount,
-                    allAnswersCount
-                  )}
-                </span>
-              </div>
-              {/* title  */}
-              <div className="text-3xl justify-center items-start overflow-hidden flex text-center overflow-ellipsis max-w-[600px] break-normal [word-break:break-word] max-h-[180px]">
-                {quiz_data.title}
-              </div>
-              {/* space to show action item */}
-              <div className="flex justify-center shrink-0 w-full max-w-[600px] h-1/3 text-xl max-h-[50px] min-h-[20px] self-center">
-                {quizState === QUIZ_NOT_STARTED ? (
-                  <button
-                    className="bg-stone-300 w-full h-full flex justify-center items-center"
-                    onClick={() => setQuizState(QUIZ_RUNNING)}
-                  >
-                    Start Quiz <PlayIcon className="h-full scale-50" />
-                  </button>
-                ) : quizState === QUIZ_PAUSED ? (
-                  <>
-                    <button
-                      className="bg-yellow-300 w-full h-14 flex justify-center items-center"
-                      onClick={() => setQuizState(QUIZ_RUNNING)}
-                    >
-                      Resume <PlayIcon className="h-full scale-50" />
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <input
-                      ref={answerRef}
-                      placeholder="Answer"
-                      className="w-full h-14 px-4 font-normal"
-                      onKeyDown={(e) => handleAnswerKeyDown(e)}
-                    ></input>
-                  </>
+              )}
+              <span className="ml-4">
+                {getTopPanelAnswersInfo(
+                  quizState.started,
+                  correctAnswersCount,
+                  allAnswersCount
                 )}
-              </div>
-            </>
-          ) : (
-            <div className="relative flex self-center justify-center items-center w-fit h-full text-4xl">
+              </span>
+            </div>
+            {/* middle screen  */}
+
+            <div
+              className={
+                "absolute flex self-center justify-center items-center w-fit h-full text-4xl transition-opacity " +
+                (quizState === QUIZ_TIMESUP ? "" : " opacity-0 ")
+              }
+            >
               Time's Up!
               {/* button-wrapper */}
               <div className="flex flex-col">
                 <button
-                  className="absolute w-9 h-9 bg-stone-300 -right-12 bottom-8 p-1 after:content-['try_again'] after:text-xs after:absolute after:-bottom-4 after:-left-[0.875rem] after:text-center after:w-16 after:capitalize"
+                  className="absolute w-9 h-9 bg-stone-300 -right-12 p-1 after:content-['try_again'] after:text-xs after:absolute after:-bottom-4 after:-left-[0.875rem] after:text-center after:w-16 after:capitalize"
                   onClick={resetQuiz}
                 >
                   <ArrowPathIcon />
                 </button>
               </div>
             </div>
-          )}
+
+            <div
+              className={
+                "text-3xl justify-center items-start overflow-hidden flex text-center overflow-ellipsis max-w-[600px] break-normal [word-break:break-word] max-h-[180px] transition-opacity" +
+                (quizState === QUIZ_TIMESUP ? " opacity-0 " : "")
+              }
+            >
+              {quiz_data.title}
+            </div>
+
+            {/* space to show action item */}
+            <div className="flex justify-center shrink-0 w-full max-w-[600px] h-1/3 text-xl max-h-[50px] min-h-[20px] self-center">
+              {quizState === QUIZ_NOT_STARTED ? (
+                <button
+                  className="bg-stone-300 w-full h-full flex justify-center items-center"
+                  onClick={() => setQuizState(QUIZ_RUNNING)}
+                >
+                  Start Quiz <PlayIcon className="h-full scale-50" />
+                </button>
+              ) : quizState === QUIZ_PAUSED ? (
+                <>
+                  <button
+                    className="bg-yellow-300 w-full h-14 flex justify-center items-center"
+                    onClick={() => setQuizState(QUIZ_RUNNING)}
+                  >
+                    Resume <PlayIcon className="h-full scale-50" />
+                  </button>
+                </>
+              ) : (
+                <>
+                  <input
+                    ref={answerRef}
+                    placeholder="Answer"
+                    className="w-full h-14 px-4 font-normal"
+                    onKeyDown={(e) => handleAnswerKeyDown(e)}
+                  ></input>
+                </>
+              )}
+            </div>
+          </>
+          {/* ) : ( */}
+
+          {/* )} */}
         </div>
         {/* subcategories */}
         {

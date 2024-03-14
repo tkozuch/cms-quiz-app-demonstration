@@ -1,6 +1,6 @@
 ---
 title: 2 subcat
-time: 44
+time: 5
 subcategories:
   - title: test quiz
     answers:
