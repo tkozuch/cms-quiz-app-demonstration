@@ -255,13 +255,24 @@ const QuizPage = ({
                       : " opacity-0 ")
                   }
                   onClick={() => setQuizState(QUIZ_PAUSED)}
+                  disabled={[
+                    QUIZ_TIMESUP,
+                    QUIZ_PAUSED,
+                    QUIZ_NOT_STARTED,
+                  ].includes(quizState)}
                 >
                   <PauseIcon />
                 </button>
               }
-              {quizState !== QUIZ_TIMESUP && (
-                <span className="ml-4">{formatTime(timeRemaining)}</span>
-              )}
+
+              <span
+                className={
+                  "ml-4" + (quizState === QUIZ_TIMESUP ? " text-red-400" : "")
+                }
+              >
+                {formatTime(timeRemaining)}
+              </span>
+
               <span className="ml-4">
                 {getTopPanelAnswersInfo(
                   quizState.started,
@@ -274,7 +285,8 @@ const QuizPage = ({
 
             <div
               className={
-                "absolute flex self-center justify-center items-center w-fit h-full text-4xl transition-opacity " +
+                // make it absolute, so that it doesn't take any space, and thus no layout shift when changing from "title" to "Time's up" fields
+                "absolute flex self-center justify-center items-center w-fit text-4xl  top-1/2 -translate-y-1/2" +
                 (quizState === QUIZ_TIMESUP ? "" : " opacity-0 ")
               }
             >
@@ -292,7 +304,7 @@ const QuizPage = ({
 
             <div
               className={
-                "text-3xl justify-center items-start overflow-hidden flex text-center overflow-ellipsis max-w-[600px] break-normal [word-break:break-word] max-h-[180px] transition-opacity" +
+                "text-3xl justify-center items-start overflow-hidden flex text-center overflow-ellipsis max-w-[600px] break-normal [word-break:break-word] max-h-[180px] " +
                 (quizState === QUIZ_TIMESUP ? " opacity-0 " : "")
               }
             >
@@ -322,8 +334,9 @@ const QuizPage = ({
                   <input
                     ref={answerRef}
                     placeholder="Answer"
-                    className="w-full h-14 px-4 font-normal"
+                    className="w-full h-14 px-4 font-normal disabled:bg-white"
                     onKeyDown={(e) => handleAnswerKeyDown(e)}
+                    disabled={quizState === QUIZ_TIMESUP}
                   ></input>
                 </>
               )}
