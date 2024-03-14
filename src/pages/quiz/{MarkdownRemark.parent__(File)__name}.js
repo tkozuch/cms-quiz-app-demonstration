@@ -151,10 +151,10 @@ const QuizPage = ({
 }) => {
   const { markdownRemark } = data; // data.markdownRemark holds your post data
   const quiz_data = markdownRemark.frontmatter;
-  const quizTime = Number(quiz_data?.time) || 180;
+  const quizTime = 3 || Number(quiz_data?.time) || 180;
   const answersReferences = getInitialAnswersRefrences(quiz_data.subcategories);
 
-  const [timeRemaining, setTimeRemaining] = useState(3);
+  const [timeRemaining, setTimeRemaining] = useState(quizTime);
   const [quizState, setQuizState] = useState(QUIZ_NOT_STARTED);
   const [answersState, setAnswersState] = useState(
     getInitialAnswersState(quiz_data.subcategories)
@@ -234,20 +234,21 @@ const QuizPage = ({
         {/* top-panel */}
         <div
           className={
-            "flex flex-col min-h-[200px] items-center justify-between gap-4 sm:gap-8 grow mb-8" +
+            "flex flex-col min-h-[200px] items-center justify-between gap-4 sm:gap-8 grow mb-8 md:gap-12" +
             // for Time's up positioning
             " relative "
           }
         >
           <>
-            <div className="flex text-xl w-full max-w-[600px]">
-              <Link to="/" className="ml-4 mr-4">
-                <img src={logo} alt="logo" className="h-8" />
+            {/* top-panel -- top-row */}
+            <div className="flex text-2xl md:text-3xl w-full max-w-[600px]">
+              <Link to="/" className="mr-4">
+                <img src={logo} alt="logo" className="h-8 md:h-10" />
               </Link>
               {
                 <button
                   className={
-                    "bg-yellow-200 ml-auto w-6 px-1 box-content " +
+                    "bg-yellow-200 ml-auto w-6 md:w-7 px-1 box-content " +
                     (quizState !== QUIZ_PAUSED &&
                     quizState !== QUIZ_NOT_STARTED &&
                     quizState !== QUIZ_TIMESUP
@@ -273,7 +274,7 @@ const QuizPage = ({
                 {formatTime(timeRemaining)}
               </span>
 
-              <span className="ml-4">
+              <span className="ml-4 md:ml-8">
                 {getTopPanelAnswersInfo(
                   quizState.started,
                   correctAnswersCount,
@@ -286,7 +287,7 @@ const QuizPage = ({
             <div
               className={
                 // make it absolute, so that it doesn't take any space, and thus no layout shift when changing from "title" to "Time's up" fields
-                "absolute z-10 flex self-center justify-center items-center w-fit text-4xl  top-1/2 -translate-y-1/2 " +
+                "absolute z-10 flex self-center justify-center items-center w-fit text-4xl md:text-5xl  top-1/2 -translate-y-1/2 -mt-2" +
                 (quizState === QUIZ_TIMESUP ? "" : " opacity-0 ")
               }
             >
@@ -294,7 +295,7 @@ const QuizPage = ({
               {/* button-wrapper */}
               <div className="flex flex-col">
                 <button
-                  className="absolute w-9 h-9 bg-stone-300 -right-12 p-1 after:content-['try_again'] after:text-xs after:absolute after:-bottom-4 after:-left-[0.875rem] after:text-center after:w-16 after:capitalize"
+                  className="absolute w-9 h-9 bg-stone-300 -right-12 p-1 after:content-['try_again'] after:text-xs md:after:text-sm after:absolute after:-bottom-4 after:-left-[0.875rem] after:text-center after:w-16 after:capitalize"
                   onClick={resetQuiz}
                 >
                   <ArrowPathIcon />
@@ -304,7 +305,7 @@ const QuizPage = ({
 
             <div
               className={
-                "text-3xl justify-center items-start overflow-hidden flex text-center overflow-ellipsis max-w-[600px] break-normal [word-break:break-word] max-h-[180px] " +
+                "text-3xl md:text-5xl justify-center items-start overflow-hidden flex text-center overflow-ellipsis max-w-[600px] break-normal [word-break:break-word] max-h-[180px] " +
                 (quizState === QUIZ_TIMESUP ? " opacity-0 " : "")
               }
             >
@@ -312,7 +313,7 @@ const QuizPage = ({
             </div>
 
             {/* space to show action item */}
-            <div className="flex justify-center shrink-0 w-full max-w-[600px] h-1/3 text-xl max-h-[50px] min-h-[20px] self-center">
+            <div className="flex justify-center shrink-0 w-full max-w-[600px] h-1/3 text-xl md:text-2xl max-h-[50px] min-h-[20px] self-center">
               {quizState === QUIZ_NOT_STARTED ? (
                 <button
                   className="bg-stone-300 w-full h-full flex justify-center items-center"
@@ -355,7 +356,7 @@ const QuizPage = ({
               // reset expanding for bigger
               " md:static md:ml-0 md:mr-0 md:w-auto md:self-center " +
               // basic setting
-              " flex grow-[5] overflow-x-auto gap-8 snap-x snap-mandatory md:max-w-[91.66667vw] xl:max-w-7xl transition-opacity" +
+              " flex basis-1/2 grow-[5] overflow-x-auto gap-8 snap-x snap-mandatory md:max-w-[91.66667vw] xl:max-w-7xl transition-opacity" +
               // customizable setting
               (quiz_data.subcategories.length < 3
                 ? " md:justify-center "
