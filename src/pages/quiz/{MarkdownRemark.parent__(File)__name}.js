@@ -241,7 +241,7 @@ const QuizPage = ({
         >
           <>
             {/* top-panel -- top-row */}
-            <div className="flex text-2xl md:text-3xl w-full max-w-[600px]">
+            <div className="flex text-2xl md:text-3xl w-full max-w-[800px]">
               <Link to="/" className="mr-4">
                 <img src={logo} alt="logo" className="h-8 md:h-10" />
               </Link>
@@ -287,7 +287,7 @@ const QuizPage = ({
             <div
               className={
                 // make it absolute, so that it doesn't take any space, and thus no layout shift when changing from "title" to "Time's up" fields
-                "absolute z-10 flex self-center justify-center items-center w-fit text-4xl md:text-5xl  top-1/2 -translate-y-1/2 -mt-2" +
+                "absolute z-10 flex self-center justify-center items-center w-fit text-3xl md:text-5xl  top-1/2 -translate-y-1/2 -mt-2" +
                 (quizState === QUIZ_TIMESUP ? "" : " opacity-0 ")
               }
             >
@@ -305,7 +305,7 @@ const QuizPage = ({
 
             <div
               className={
-                "text-3xl md:text-5xl justify-center items-start overflow-hidden flex text-center overflow-ellipsis max-w-[600px] break-normal [word-break:break-word] max-h-[180px] " +
+                "text-3xl md:text-5xl justify-center items-center overflow-hidden flex text-center overflow-ellipsis max-w-[800px] break-normal [word-break:break-word] grow" +
                 (quizState === QUIZ_TIMESUP ? " opacity-0 " : "")
               }
             >
@@ -313,7 +313,7 @@ const QuizPage = ({
             </div>
 
             {/* space to show action item */}
-            <div className="flex justify-center shrink-0 w-full max-w-[600px] h-1/3 text-xl md:text-2xl max-h-[50px] min-h-[20px] self-center">
+            <div className="flex justify-center shrink-0 w-full max-w-[800px] h-1/3 text-xl md:text-2xl max-h-[50px] min-h-[20px] self-center">
               {quizState === QUIZ_NOT_STARTED ? (
                 <button
                   className="bg-stone-300 w-full h-full flex justify-center items-center"
