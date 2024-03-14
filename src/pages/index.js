@@ -11,7 +11,7 @@ const IndexPage = ({
 
   return (
     <Layout>
-      <img src={logo} alt="Logo" />
+      <img src={logo} alt="Logo" className="lg:mt-8" />
       <ul
         className="flex flex-wrap w-full gap-x-[--gapx] gap-y-8 overflow-y-auto items-center break-words py-[7%] md:py-0
         [--mask:linear-gradient(0deg,#0000,#000_4%_96%,#0000)] md:[--mask:none] [-webkit-mask:--mask] [mask:--mask] mt-4 md:mt-16 grow content-normal md:mb-8"

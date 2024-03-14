@@ -343,9 +343,6 @@ const QuizPage = ({
               )}
             </div>
           </>
-          {/* ) : ( */}
-
-          {/* )} */}
         </div>
         {/* subcategories */}
         {
