@@ -19,11 +19,18 @@ module.exports = {
           "80%": { backgroundColor: "var(--unanswered-answer)" },
           "100%": { backgroundColor: "var(--correct-answer)" },
         },
+        ping_score: {
+          "100%": {
+            transform: "scale(2) translateX(-6px)",
+          },
+        },
       },
       animation: {
         show: "show 135ms var(--tailwind-default-transition) forwards",
         show_long: "show 500ms var(--tailwind-default-transition) forwards",
         correct_answer: "correct_answer 700ms ease-in-out forwards 135ms",
+        ping_score:
+          "ping_score 1000ms var(--tailwind-default-transition) forwards",
       },
     },
   },

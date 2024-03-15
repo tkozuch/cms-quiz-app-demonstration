@@ -165,6 +165,7 @@ const QuizPage = ({
   );
   const dialogRef = useRef(null);
   const answerRef = useRef(null);
+  const [scoreAnimation, setScoreAnimation] = useState(false);
 
   const allAnswersCount = getNumberOfQuestions(quiz_data.subcategories);
   const correctAnswersCount = getCorrectAnswersCount(answersState);
@@ -177,9 +178,20 @@ const QuizPage = ({
       let answer = e.target.value;
       // this means it is correct
       if (formatAnswer(answer) in answersState) {
-        const stateCopy = { ...answersState };
-        stateCopy[formatAnswer(answer)] = true;
-        setAnswersState(stateCopy);
+        // this means it was already correct
+        if (answersState[formatAnswer(answer)]) {
+          // can provide some alternative animation here.
+        } else {
+          const stateCopy = { ...answersState };
+          stateCopy[formatAnswer(answer)] = true;
+          setAnswersState(stateCopy);
+          console.log("setting score animation ");
+          setScoreAnimation(true);
+          setTimeout(() => {
+            console.log("unsetting ");
+            setScoreAnimation(false);
+          }, 1000);
+        }
         answersReferences[formatAnswer(answer)].ref.current?.scrollIntoView({
           behavior: "smooth",
           block: "end",
@@ -304,10 +316,20 @@ const QuizPage = ({
               </span>
 
               <span className="ml-4 md:ml-8">
-                {getTopPanelAnswersInfo(
-                  quizState.started,
-                  correctAnswersCount,
-                  allAnswersCount
+                {quizState === QUIZ_NOT_STARTED ? (
+                  <span>{allAnswersCount}</span>
+                ) : (
+                  <>
+                    <span
+                      className={
+                        "inline-block " +
+                        (scoreAnimation ? " animate-ping_score " : "")
+                      }
+                    >
+                      {correctAnswersCount}
+                    </span>
+                    /<span>{allAnswersCount}</span>
+                  </>
                 )}
               </span>
             </div>
