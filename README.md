@@ -27,7 +27,7 @@
 
 App is statically built during build process thanks to which doesn't require any api calls which speeds up the website access.
 
-To store content, a Git based CMS was chosen, thanks to which APP does not require any additional backend code or hosting. Everything is provided by Netlify and GitHub repository.
+To store content, a Git based CMS was chosen, thanks to which APP does not require any additional backend code or hosting.
 
 https://decapcms.org/docs/intro/
 

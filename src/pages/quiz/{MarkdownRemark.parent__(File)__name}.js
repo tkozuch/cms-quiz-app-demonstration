@@ -35,18 +35,6 @@ const formatTime = (seconds) => {
 };
 
 /**
- *
- * @param {boolean} quizStarted
- * @param {number} correctAnswers
- * @param {number} allAnswers
- * @returns {string}
- */
-const getTopPanelAnswersInfo = (quizState, correctAnswers, allAnswers) => {
-  if (quizState === QUIZ_NOT_STARTED) return allAnswers;
-  return `${correctAnswers}/${allAnswers}`;
-};
-
-/**
  * Format answer for consistency within the app.
  *  */
 const formatAnswer = (answer) => {
@@ -453,7 +441,7 @@ const QuizPage = ({
         }
       </div>
       <dialog
-        className="open:flex flex-col items-center w-[90vw] max-w-md p-8 md:p-16 h-fit backdrop:bg-black/40 backdrop:animate-show_long opacity-0 animate-show_long [animation-duration:1000ms]"
+        className="open:flex flex-col items-center w-[90vw] max-w-md p-8 md:p-16 h-fit backdrop:bg-black/40 backdrop:animate-show_long opacity-0 animate-show_long [animation-duration:250ms]"
         ref={dialogRef}
       >
         <p className="text-xl md:text-3xl text-green-500 font-bold">
