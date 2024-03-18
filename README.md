@@ -2,9 +2,10 @@
 
 # <div id='s1' />Content Editable Web Quiz App
 
-Quiz Game app with content customization.
-
 ![alt text](docs/preview.png)
+![alt text](docs/preview-admin.png)
+
+## Table of contents
 
 - [First time access](#s1-1)
 - [Editing content](#s1-2)
@@ -13,13 +14,13 @@ Quiz Game app with content customization.
   - [Deleting a quiz](#s1-2-3)
 - [Limitations](#s1-3)
   - [Netlify](#s1-3-1)
-  - [Known issues](#s1-3-2)
-  - [Multiple same values](#s1-3-3)
-  - [Netlify admin panel](#s1-3-4)
-- [Dev notes](#s1-4)
-- [Further options](#s1-5)
-- [Copyrights](#s1-6)
-- [Authors](#s1-6)
+  - [Multiple same values](#s1-3-2)
+  - [Minor string format limitation](#s1-3-3)
+- [Dev notes](#s1-5)
+  - [Local development](#s1-5-1)
+- [ Further options](#s1-6)
+- [ Copyrights](#s1-7)
+- [ Authors](#s1-8)
 
 ## <div id='s1-1' />First time access
 
@@ -84,25 +85,23 @@ This allows for around 100-150 content alterations (100-150 site update commands
 
 Usual site update time is around 1-2min after a Publish.
 
-### <div id='s1-3-3' />Multiple same values
+### <div id='s1-3-2' />Multiple same values
 
 Multiple same values for answers / subcategories inside single quiz are not supported.
 
-## <div id='s1-3-2' />Known issues
-
-#### <div id='s' />Minor string format limitation
+### <div id='s1-3-3' />Minor string format limitation
 
 Adding a time-like string (f.e. 3:45) as title may result in the field being considered a number for some reason and prevent site build.
 
 This is most likely a Decap CMS issue.
 
-## <div id='s1-4' />Dev notes
+## <div id='s1-5' />Dev notes
 
 Project is build with Gatsby and Decap CMS.
 
 In case of need, it is best to refer to the above framework providers.
 
-### Local development
+### <div id='s1-5-1' />Local development
 
 > gatsby develop
 
@@ -110,19 +109,19 @@ and in another terminal, run server for local backend:
 
 > npx decap-server
 
-## <div id='s1-5' /> Further options
+**warning: this is an important step, as without it changes in local admin panel will result in remote repository update**
 
-With Decap CMS it is possible to also upload files as, thus, it would be possible to provide customizable quiz "banner-images" uploaded from admin panel. A layout option for whether to include quiz title over banner could also be specified.
+## <div id='s1-6' /> Further options
 
-In simillar way, the main page could be also customized.
+With Decap CMS it is possible to upload files as content. This opens door for possibilities like for example quizzes having a customized "banner-image" set by content editors. 
 
-## <div id='s1-6' /> Copyrights
+## <div id='s1-7' /> Copyrights
 
-I hereby prohibit from re-distributing, copying, reselling, or re-using the code or it's parts in any form.
+I hereby prohibit from re-distributing, copying, reselling, or re-using the code or its parts in any form.
 
 The code is made public only for demonstration purposes.
 
-### <div id='s1-7' /> Authors
+## <div id='s1-8' /> Authors
 
 Tomasz Kożuch
 
