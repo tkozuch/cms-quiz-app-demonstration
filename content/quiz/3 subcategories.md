@@ -1,5 +1,5 @@
 ---
-title: 3 subcat
+title: "demo: 3 subcat"
 time: 131
 subcategories:
   - title: subcategory with long name and answers
