@@ -7,6 +7,7 @@
 
 ## Table of contents
 
+- [Features](#s0-1)
 - [First time access](#s1-1)
 - [Editing content](#s1-2)
   - [Adding a quiz](#s1-2-1)
@@ -21,6 +22,14 @@
 - [ Further options](#s1-6)
 - [ Copyrights](#s1-7)
 - [ Authors](#s1-8)
+
+## <div id='s0-1' />Features
+
+App is statically built during build process thanks to which doesn't require any api calls which speeds up the website access.
+
+To store content, a Git based CMS was chosen, thanks to which APP does not require any additional backend code or hosting. Everything is provided by Netlify and GitHub repository.
+
+https://decapcms.org/docs/intro/
 
 ## <div id='s1-1' />First time access
 
@@ -91,7 +100,7 @@ Multiple same values for answers / subcategories inside single quiz are not supp
 
 ### <div id='s1-3-3' />Minor string format limitation
 
-Adding a time-like string (f.e. 3:45) as title may result in the field being considered a number for some reason and prevent site build.
+Adding a time-like string (f.e. 3:45) as title may result in the field being considered a number for some reason and prevent site build. This can be worked around by adding a " " (space) sign to the string.
 
 This is most likely a Decap CMS issue.
 
@@ -113,7 +122,7 @@ and in another terminal, run server for local backend:
 
 ## <div id='s1-6' /> Further options
 
-With Decap CMS it is possible to upload files as content. This opens door for possibilities like for example quizzes having a customized "banner-image" set by content editors. 
+With Decap CMS it is possible to upload files as content. This opens door for possibilities like for example quizzes having a customized "banner-image" set by content editors.
 
 ## <div id='s1-7' /> Copyrights
 
