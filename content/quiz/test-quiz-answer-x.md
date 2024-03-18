@@ -1,5 +1,5 @@
 ---
-title: demo quiz - answer "x"
+title: 'demo: win quiz - answer "x"'
 time: 180
 subcategories:
   - title: answer "x"
