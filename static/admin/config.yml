@@ -3,6 +3,7 @@ local_backend: true
 backend:
   name: git-gateway
   squash_merges: true
+  branch: demo
 
 media_folder: static/img
 public_folder: /img
