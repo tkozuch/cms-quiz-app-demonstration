@@ -1,5 +1,5 @@
 ---
-title: "demo: time's up - quick quiz"
+title: "demo: quick quiz"
 time: 5
 subcategories:
   - title: just wait 5 seconds
