@@ -114,11 +114,9 @@ In case of need, it is best to refer to the above framework providers.
 
 > gatsby develop
 
-and in another terminal, run server for local backend:
+to test the content changing, without affecting remote repository, in another terminal run:
 
 > npx decap-server
-
-**warning: this is an important step, as without it changes in local admin panel will result in remote repository update**
 
 ## <div id='s1-6' /> Further options
 
