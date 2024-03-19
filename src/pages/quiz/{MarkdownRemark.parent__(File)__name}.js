@@ -110,7 +110,7 @@ const getCorrectAnswersCount = (answersState) => {
 /**
  * Adjust initial scroll position for subcategories container.
  *
- * Only visual pleasancy purposes. Not critical.
+ * Only visual pleasance purposes. Not critical.
  *
  * @param {list[object]} subcategories - data from cms
  */
@@ -118,7 +118,7 @@ const adjustSubcategoriesScrollPosition = (
   subcategories,
   answersReferences
 ) => {
-  let middleIndex = Math.ceil(subcategories.length / 2) - 1; // 3 for 5, 2 for 4 etc; subtract 1 to accomodate for 0 element
+  let middleIndex = Math.ceil(subcategories.length / 2) - 1; // 3 for 5, 2 for 4 etc; subtract 1 to accommodate for 0 element
   let answerFromSecondSubcategory = subcategories[middleIndex].answers[0].value;
   answersReferences[
     formatAnswer(answerFromSecondSubcategory)
