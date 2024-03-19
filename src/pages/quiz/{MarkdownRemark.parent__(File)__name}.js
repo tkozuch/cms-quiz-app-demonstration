@@ -145,6 +145,7 @@ const QuizPage = ({
   const quiz_data = markdownRemark.frontmatter;
   const quizTime = Number(quiz_data?.time) || 180;
   const answersReferences = getInitialAnswersRefrences(quiz_data.subcategories);
+  const title_mobile = quiz_data.title_mobile || quiz_data.title;
 
   const [timeRemaining, setTimeRemaining] = useState(quizTime);
   const [quizState, setQuizState] = useState(QUIZ_NOT_STARTED);
@@ -238,7 +239,7 @@ const QuizPage = ({
         entries.forEach((entry) => {
           if (
             !entry.isIntersecting &&
-            // this means animation was shown already and we don't want to do anything. prevent animations multiple triggers on scroll-in/out
+            // this means animation was shown already and we don't want to do anything. prevents animations multiple triggers on scroll-in/out
             entry.target.classList.contains("animate-correct_answer")
           )
             return;
@@ -303,7 +304,7 @@ const QuizPage = ({
                 {formatTime(timeRemaining)}
               </span>
 
-              {/* score  */}
+              {/* score */}
               <span className="hidden sm:inline-block ml-4 md:ml-8">
                 <span
                   className={
@@ -338,12 +339,12 @@ const QuizPage = ({
             </div>
             <div
               className={
-                (quiz_data.title.length >= 60 ? " text-2xl " : " text-3xl ") +
-                "md:text-5xl justify-center items-center overflow-hidden flex text-center overflow-ellipsis max-w-[800px] break-normal [word-break:break-word] grow" +
+                " text-3xl md:text-5xl justify-center items-center overflow-hidden flex text-center overflow-ellipsis max-w-[800px] break-normal [word-break:break-word] grow" +
                 (quizState === QUIZ_TIMESUP ? " opacity-0 " : "")
               }
             >
-              {quiz_data.title}
+              <span className="hidden sm:inline">{quiz_data.title}</span>
+              <span className="sm:hidden">{title_mobile}</span>
             </div>
 
             {/* space to show action item */}
@@ -475,6 +476,7 @@ export const pageQuery = graphql`
     markdownRemark(id: { eq: $id }) {
       frontmatter {
         title
+        title_mobile
         time
         subcategories {
           title

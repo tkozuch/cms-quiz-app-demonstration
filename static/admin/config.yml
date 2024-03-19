@@ -20,7 +20,20 @@ collections:
     editor:
       preview: false
     fields:
-      - { label: "Title", name: "title", widget: "string" }
+      - {
+          label: "Title",
+          name: "title",
+          widget: "string",
+          pattern: ["^.{0,100}$", "Must have maximum 100 characters"],
+          hint: "Max 100 characters",
+        }
+      - {
+          label: "Title Mobile",
+          name: "title_mobile",
+          widget: "string",
+          hint: "Shorter title to be displayed on mobile devices. If not provided, normal title will be used. Max 60 characters.",
+          pattern: ["^.{0,60}$", "Must have maximum 60 characters"],
+        }
       - {
           default: 180,
           label: "Time (seconds)",

@@ -1,5 +1,7 @@
 ---
-title: Test your music knowledge. Guess 40 best songs from the 80s! (both metal and punk!)
+title: Test your music knowledge. Guess 40 best songs from the 80s! (both metal
+  and punk!)
+title_mobile: Test your music knowledge. Guess 40 best songs from the 80s!
 time: 500
 subcategories:
   - title: Metal
