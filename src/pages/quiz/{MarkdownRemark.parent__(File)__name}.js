@@ -274,6 +274,7 @@ const QuizPage = ({
               <Link to="/" className="mr-4">
                 <img src={logo} alt="logo" className="h-8 md:h-10" />
               </Link>
+              {/* timing */}
               {
                 <button
                   className={
@@ -294,7 +295,6 @@ const QuizPage = ({
                   <PauseIcon />
                 </button>
               }
-
               <span
                 className={
                   "ml-4" + (quizState === QUIZ_TIMESUP ? " text-red-400" : "")
@@ -303,26 +303,21 @@ const QuizPage = ({
                 {formatTime(timeRemaining)}
               </span>
 
-              <span className="ml-4 md:ml-8">
-                {quizState === QUIZ_NOT_STARTED ? (
-                  <span>{allAnswersCount}</span>
-                ) : (
-                  <>
-                    <span
-                      className={
-                        "inline-block " +
-                        (scoreAnimation ? " animate-ping_score " : "")
-                      }
-                    >
-                      {correctAnswersCount}
-                    </span>
-                    /<span>{allAnswersCount}</span>
-                  </>
-                )}
+              {/* score  */}
+              <span className="hidden sm:inline-block ml-4 md:ml-8">
+                <span
+                  className={
+                    "inline-block " +
+                    (scoreAnimation ? " animate-ping_score " : "")
+                  }
+                >
+                  {correctAnswersCount}
+                </span>
+                /<span>{allAnswersCount}</span>
               </span>
             </div>
-            {/* middle screen  */}
 
+            {/* middle screen  */}
             <div
               className={
                 // make it absolute, so that it doesn't take any space, and thus no layout shift when changing from "title" to "Time's up" fields
@@ -341,10 +336,10 @@ const QuizPage = ({
                 </button>
               </div>
             </div>
-
             <div
               className={
-                "text-3xl md:text-5xl justify-center items-center overflow-hidden flex text-center overflow-ellipsis max-w-[800px] break-normal [word-break:break-word] grow" +
+                (quiz_data.title.length >= 60 ? " text-2xl " : " text-3xl ") +
+                "md:text-5xl justify-center items-center overflow-hidden flex text-center overflow-ellipsis max-w-[800px] break-normal [word-break:break-word] grow" +
                 (quizState === QUIZ_TIMESUP ? " opacity-0 " : "")
               }
             >
@@ -380,6 +375,17 @@ const QuizPage = ({
                   ></input>
                 </>
               )}
+              <span className="flex sm:hidden text-2xl ml-4 md:ml-8 justify-center items-center">
+                <span
+                  className={
+                    "inline-block " +
+                    (scoreAnimation ? " animate-ping_score " : "")
+                  }
+                >
+                  {correctAnswersCount}
+                </span>
+                /<span>{allAnswersCount}</span>
+              </span>
             </div>
           </>
         </div>
