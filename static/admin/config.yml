@@ -29,6 +29,7 @@ collections:
         }
       - {
           label: "Title Mobile",
+          required: false,
           name: "title_mobile",
           widget: "string",
           hint: "Shorter title to be displayed on mobile devices. If not provided, normal title will be used. Max 60 characters.",
