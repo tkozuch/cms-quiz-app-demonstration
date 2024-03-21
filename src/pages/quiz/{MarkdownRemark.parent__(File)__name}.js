@@ -490,3 +490,5 @@ export const pageQuery = graphql`
 `;
 
 export default QuizPage;
+
+export { Head } from "../index";

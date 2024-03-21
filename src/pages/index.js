@@ -3,6 +3,7 @@ import { Link, graphql } from "gatsby";
 
 import Layout from "../components/layout";
 import logo from "../images/logo-quizzes-font-honk.png";
+import favicon from "../images/favicon.png";
 
 const IndexPage = ({
   data, // this prop will be injected by the GraphQL query below.
@@ -64,4 +65,10 @@ export const pageQuery = graphql`
 
 export default IndexPage;
 
-export const Head = () => <title>Home Page</title>;
+export const Head = ({ data }) => (
+  <>
+    <title>Quizzes</title>
+    <meta content="Your new favorite quiz app!" name="description" />
+    <link rel="icon" href={favicon} />
+  </>
+);
