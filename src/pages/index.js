@@ -65,9 +65,9 @@ export const pageQuery = graphql`
 
 export default IndexPage;
 
-export const Head = ({ data }) => (
+export const Head = () => (
   <>
-    <title>Quizzes</title>
+    <title id="title">Quizzes</title>
     <meta content="Your new favorite quiz app!" name="description" />
     <link rel="icon" href={favicon} />
   </>

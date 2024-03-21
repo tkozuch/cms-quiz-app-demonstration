@@ -5,6 +5,7 @@ import { PlayIcon, PauseIcon, ArrowPathIcon } from "@heroicons/react/24/solid";
 
 import logo from "../../images/logo-quizzes-font-honk.png";
 import Layout from "../../components/layout";
+import { Head as HeadIndex } from "../index";
 
 const QUIZ_NOT_STARTED = "QUIZ_NOT_STARTED";
 const QUIZ_RUNNING = "QUIZ_STARTED";
@@ -491,4 +492,10 @@ export const pageQuery = graphql`
 
 export default QuizPage;
 
-export { Head } from "../index";
+export const Head = ({ data }) => (
+  <>
+    <HeadIndex></HeadIndex>
+    {/* the same id makes it overwrite previous title */}
+    <title id="title">{data.markdownRemark.frontmatter.title}</title>
+  </>
+);
