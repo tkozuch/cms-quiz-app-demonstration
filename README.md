@@ -2,6 +2,8 @@
 
 # <div id='s1' />Content Editable Web Quiz App
 
+https://cms-quiz-demo.netlify.app/
+
 ![alt text](docs/preview.png)
 ![alt text](docs/preview-admin.png)
 
